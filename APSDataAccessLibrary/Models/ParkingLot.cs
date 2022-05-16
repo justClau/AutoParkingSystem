@@ -9,7 +9,6 @@ namespace DataAccess.Models
     public class ParkingLot
     {
         public int Id { get; set; }
-        public int VehicleId { get; set; }
         public string Name { get; set; }
     }
 }

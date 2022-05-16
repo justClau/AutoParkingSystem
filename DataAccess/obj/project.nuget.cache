@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P46htDgaD5xTMGqadlgJVfO4bMeOJzSIRCMAyfCZytW70lFHljezA6XjRyDh+19LaMyybfKzpIe3H2MNiwpoiw==",
+  "dgSpecHash": "kk3811CKwDPoogexGKl1N+HtfPECnSvi2u2L+P1ApVHUIAJzFyEfaZtJJrKfjKtKg1l3/zsZBtmWasMS63TeLQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\APSDataAccessLibrary.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

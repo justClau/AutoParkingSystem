@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\DataAccess.csproj",
-      "projectName": "DataAccess",
-      "projectPath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\APSDataAccessLibrary.csproj",
+      "projectName": "APSDataAccessLibrary",
+      "projectPath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\APSDataAccessLibrary.csproj",
       "packagesPath": "C:\\Users\\claudiu.cirmaci\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",

@@ -9,8 +9,8 @@ namespace DataAccess.Models
     public class Bill
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public int ParkingLotId { get; set; }
+        public User User { get; set; }
+        public string ParkingLot { get; set; }
         public string VehiclePlate { get; set; }
         public string VehicleVIN { get; set; }
         public DateTime IssuedAt { get; set; }
