@@ -75,6 +75,15 @@ namespace APSDataAccessLibrary.DbAccess
             dbUser.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             return user;
         }
+        public User AddUserVehicle(int UserID, int VehicleID)
+        {
+            var user = GetUserById(UserID);
+            if (user is null) return null;
+            user.Vehicle.Id = VehicleID;
+            var dbUser = database.Users.Attach(user);
+            dbUser.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return user;
+        }
         public Vehicle GetUserParkedVehicle(int id)
         {
             var usr = GetUserById(id);
@@ -109,6 +118,17 @@ namespace APSDataAccessLibrary.DbAccess
                         select p;
             return query;
         }
-        
+        public IEnumerable<ParkingLot> AddVehicle(Vehicle newVehicle, int userId, int parkingLotId)
+        {
+            var veh = database.Vehicles.Where(veh => veh.VIN == newVehicle.VIN || veh.PlateNumber == newVehicle.PlateNumber).FirstOrDefault();
+            if (veh is not null) return null;
+            database.Vehicles.Add(newVehicle);
+            database.SaveChanges();
+            var usr = database.Users.Find(userId);
+            var parking = database.ParkingLots.Find(parkingLotId);
+            if(usr is null || parking is null) return null;
+            return null;
+
+        }
     }
 }
