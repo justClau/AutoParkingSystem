@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace APSDataAccessLibrary.Models
 {
-    public class ParkingLot
+    public class ParkingSchema
     {
         public int Id { get; set; }
         [Required]
-        public int Floor { get; set; }
+        public int Floors { get; set; }
         [Required]
-        [MaxLength(10)]
-        public string Name { get; set; }
+        public int SizeX { get; set; }
+        [Required]
+        public int SizeY { get; set; } 
     }
 }

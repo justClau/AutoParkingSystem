@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+﻿using APSDataAccessLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ namespace APSDataAccessLibrary.Context
         public DbSet<Bill> Bills { get; set; }
         public DbSet<ParkingLot> ParkingLots { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<ParkingSchema> ParkingSchema { get; set; }
         public ParkingContext(DbContextOptions options) : base(options) { }
     }
 }
