@@ -15,5 +15,6 @@ namespace APSDataAccessLibrary.Models
         [Required]
         [MaxLength(10)]
         public string Name { get; set; }
+        public Vehicle Vehicle { get; set; }
     }
 }
