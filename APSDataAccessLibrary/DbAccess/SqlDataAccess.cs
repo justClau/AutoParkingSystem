@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 #pragma warning disable CS8603
 namespace APSDataAccessLibrary.DbAccess
 {
-    public class SqlDataAccess
+    public class SqlDataAccess : IDataAccess
     {
         private readonly ParkingContext database;
         private readonly ILogger logger;
@@ -26,14 +26,16 @@ namespace APSDataAccessLibrary.DbAccess
         public IEnumerable<Bill> GetBills()
         {
             var query = from bill in database.Bills
-                        orderby bill.Id select bill;
+                        orderby bill.Id
+                        select bill;
             return query;
         }
         public IEnumerable<Bill> GetUserBills(int id)
         {
             var query = from bill in database.Bills
                         where bill.User.Id == id
-                        orderby bill.BillValue select bill;
+                        orderby bill.BillValue
+                        select bill;
             return query;
         }
         public Bill GetBillById(int id) => database.Bills.Find(id);
@@ -46,7 +48,8 @@ namespace APSDataAccessLibrary.DbAccess
         {
             var query = from user in database.Users
                         where user.IsAdmin == false
-                        orderby user.Username select user;
+                        orderby user.Username
+                        select user;
             return query;
         }
         public User GetUserById(int id) => database.Users.Find(id);
@@ -59,8 +62,8 @@ namespace APSDataAccessLibrary.DbAccess
         public User DeleteUser(int id)
         {
             var user = GetUserById(id);
-            if(user is null) return null;
-            if(user.Vehicle is not null)
+            if (user is null) return null;
+            if (user.Vehicle is not null)
             {
                 logger.LogInformation("INFORMATION: UNABLE TO DELETE USER IF VEHICLE IS IN PARKING");
                 return null;
@@ -90,7 +93,7 @@ namespace APSDataAccessLibrary.DbAccess
         public User RemoveUserVehicle(int UserID)
         {
             var user = GetUserById(UserID);
-            if(user is null) return null;
+            if (user is null) return null;
             user.Vehicle = null;
             var dbUser = database.Users.Attach(user);
             dbUser.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -106,7 +109,8 @@ namespace APSDataAccessLibrary.DbAccess
         public IEnumerable<Vehicle> GetParkedVehicles()
         {
             var query = from veh in database.Vehicles
-                        orderby veh.parkTime select veh;
+                        orderby veh.parkTime
+                        select veh;
             return query;
         }
         public Vehicle GetVehicleById(int id) => database.Vehicles.Find(id);
@@ -118,7 +122,8 @@ namespace APSDataAccessLibrary.DbAccess
         public IEnumerable<ParkingLot> GetParkingLots()
         {
             var query = from p in database.ParkingLots
-                        orderby p.Name select p;
+                        orderby p.Name
+                        select p;
             return query;
         }
         public IEnumerable<ParkingLot> GetFreeParkingLots()
@@ -134,7 +139,8 @@ namespace APSDataAccessLibrary.DbAccess
             if (FloorNumber > schema.Floors) return null;
             var query = from p in database.ParkingLots
                         where p.Floor == FloorNumber
-                        orderby p.Id select p;
+                        orderby p.Id
+                        select p;
             return query;
         }
         public ParkingLot AddParkingLotVehicle(Vehicle newVehicle)
@@ -161,7 +167,7 @@ namespace APSDataAccessLibrary.DbAccess
             var parkingLot = GetParkingLotByVehicle(VehicleID);
             if (parkingLot == null) return null;
             parkingLot.Vehicle = null;
-            var dbParkingLot = database.ParkingLots.Attach(parkingLot); 
+            var dbParkingLot = database.ParkingLots.Attach(parkingLot);
             dbParkingLot.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             return parkingLot;
         }
@@ -173,7 +179,7 @@ namespace APSDataAccessLibrary.DbAccess
         public Vehicle RemoveVehicle(int VehicleID)
         {
             var vehicle = GetVehicleById(VehicleID);
-            if(vehicle is not null) database.Vehicles.Remove(vehicle);
+            if (vehicle is not null) database.Vehicles.Remove(vehicle);
             return vehicle;
         }
         public ConfigDTO STARTCONFIG()
@@ -181,5 +187,6 @@ namespace APSDataAccessLibrary.DbAccess
             var cf = new DbConfig(config, database);
             return cf.StartParkingLotConfiguration();
         }
+        public int Commit() => database.SaveChanges();
     }
 }
