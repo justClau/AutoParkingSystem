@@ -25,7 +25,7 @@ namespace APSDataAccessLibrary.Models
         [Required]
         public DateTime ParkTime { get; set; }
         [Required]
-        public int BillValue { get; set; }
+        public double BillValue { get; set; }
         [Required]
         public bool IsPaid { get; set; }
 

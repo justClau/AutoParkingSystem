@@ -50,6 +50,12 @@ namespace APSDataAccessLibrary.DbAccess
                         select user;
             return query;
         }
+        public IEnumerable<User> GetAllUsers()
+        {
+            var query = from user in database.Users
+                        select user;
+            return query;
+        }
         public User GetUserById(int id) => database.Users.Find(id);
         public User GetUserByUsername(string name) => database.Users.Where(u => u.Username == name).FirstOrDefault();
         public User AddUser(User user)

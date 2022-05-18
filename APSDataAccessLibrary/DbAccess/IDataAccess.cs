@@ -23,6 +23,7 @@ namespace APSDataAccessLibrary.DbAccess
         User GetUserByUsername(string name);
         Vehicle GetUserParkedVehicle(int id);
         IEnumerable<User> GetUsers();
+        IEnumerable<User> GetAllUsers();
         Vehicle GetVehicleById(int id);
         Vehicle GetVehicleByPlate(string Plate);
         Vehicle GetVehicleByVIN(string VIN);
