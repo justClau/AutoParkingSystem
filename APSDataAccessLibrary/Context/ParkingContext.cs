@@ -16,5 +16,12 @@ namespace APSDataAccessLibrary.Context
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<ParkingSchema> ParkingSchema { get; set; }
         public ParkingContext(DbContextOptions options) : base(options) { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=NB-SED6-4761;Initial Catalog=APSDataBase;Integrated Security=True;");
+            }
+        }
     }
 }

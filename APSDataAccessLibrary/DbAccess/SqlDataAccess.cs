@@ -13,13 +13,11 @@ namespace APSDataAccessLibrary.DbAccess
     public class SqlDataAccess : IDataAccess
     {
         private readonly ParkingContext database;
-        private readonly ILogger logger;
         private readonly IConfiguration config;
 
-        public SqlDataAccess(ParkingContext database, ILogger logger, IConfiguration config)
+        public SqlDataAccess(ParkingContext database, IConfiguration config)
         {
             this.database = database;
-            this.logger = logger;
             this.config = config;
         }
 
@@ -64,10 +62,7 @@ namespace APSDataAccessLibrary.DbAccess
             var user = GetUserById(id);
             if (user is null) return null;
             if (user.Vehicle is not null)
-            {
-                logger.LogInformation("INFORMATION: UNABLE TO DELETE USER IF VEHICLE IS IN PARKING");
                 return null;
-            }
             database.Users.Remove(user);
             return user;
         }

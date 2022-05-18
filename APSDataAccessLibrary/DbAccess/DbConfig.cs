@@ -23,11 +23,14 @@ namespace APSDataAccessLibrary.DbAccess
         private void AddUsers()
         { 
             database.Users.Add(new User { Username = "root", FullName = "Administrator", IsAdmin = true });
+            database.SaveChanges();
             database.Users.Add(new User { Username = "user", FullName = "Reqular User", IsAdmin = false });
+            database.SaveChanges();
         }
         private void AddSchema(int floors, int sizeX, int sizeY)
         {
             database.ParkingSchema.Add(new ParkingSchema { Floors = floors, SizeX = sizeX, SizeY = sizeY });
+            database.SaveChanges();
         }
         private void ParkingDatabaseInit(int f, int n, int m)
         {
@@ -42,10 +45,21 @@ namespace APSDataAccessLibrary.DbAccess
                             Name = $"{(char)(val + j)}{k + 1}"
                         };
                         database.ParkingLots.Add(row);
+                        database.SaveChanges();
                     }
-            database.ParkingSchema.Remove(new ParkingSchema { Id = 1});
-            database.ParkingSchema.Add(new ParkingSchema { Floors = f, SizeX = n, SizeY = m });
-            if(!database.Users.Any()) AddUsers();
+            if(!database.ParkingSchema.Any())
+                database.ParkingSchema.Add(new ParkingSchema { Floors = f, SizeX = n, SizeY = m });
+            else
+            {
+                var x = database.ParkingSchema.FirstOrDefault();
+                x.Floors = f;
+                x.SizeX = n;
+                x.SizeY = m;
+                var entity = database.ParkingSchema.Attach(x);
+                entity.State = EntityState.Modified;
+            }
+            database.SaveChanges();
+            if (!database.Users.Any()) AddUsers();
             
         }
         internal ConfigDTO StartParkingLotConfiguration()
@@ -60,7 +74,7 @@ namespace APSDataAccessLibrary.DbAccess
             if (m > 26) 
                 return new ConfigDTO { StatusCode = 500, Success = false, Message = "FloorY is greater than 26. Required for naming conventions" };
                 //throw new Exception("");
-            var init = database.ParkingSchema.Find(1);
+            var init = database.ParkingSchema.FirstOrDefault();
             if (init is not null && init.Floors == floor && init.SizeX == n && init.SizeY == m)
                 return new ConfigDTO { StatusCode = 500, Success = false, Message = "No new changes to make" };
             if(init is null) AddSchema(floor, n, m);
