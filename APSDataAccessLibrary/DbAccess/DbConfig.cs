@@ -1,5 +1,6 @@
 ﻿using APSDataAccessLibrary.Context;
 using APSDataAccessLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -43,19 +44,33 @@ namespace APSDataAccessLibrary.DbAccess
             if(!database.Users.Any()) AddUsers();
             database.SaveChanges();
         }
-        private void GetParkingLotConfiguration()
+        internal ConfigDTO StartParkingLotConfiguration()
         {
             var floor = Convert.ToInt32(config.GetSection("Floors").Value);
             int m = Convert.ToInt32(config.GetSection("FloorSize").GetSection("VehicleX").Value),
                 n = Convert.ToInt32(config.GetSection("FloorSize").GetSection("VehicleY").Value);
-            if (floor == 0) throw new Exception("The parking place cannot exist with NO floors");
-            if (m == 0 || n == 0) throw new Exception("The parking place cannot exist if the rows or the columns are 0");
-            if (m > 26) throw new Exception("FloorY is greater than 26. Required for naming conventions");
+            if (floor == 0) return new ConfigDTO { StatusCode = 500, Success = false, Message = "The parking place cannot exist with NO floors" };
+
+            if (m == 0 || n == 0)
+                return new ConfigDTO { StatusCode = 500, Success = false, Message = "The parking place cannot exist if the rows or the columns are 0" };
+            if (m > 26) 
+                return new ConfigDTO { StatusCode = 500, Success = false, Message = "FloorY is greater than 26. Required for naming conventions" };
+                //throw new Exception("");
             var init = database.ParkingSchema.Find(1);
             if (init is not null && init.Floors == floor && init.SizeX == n && init.SizeY == m)
-                throw new Exception("No new changes to make");
+                return new ConfigDTO { StatusCode = 500, Success = false, Message = "No new changes to make" };
+            if (database.ParkingLots.Any())
+                database.ParkingLots.FromSqlRaw("TRUNCATE TABLE dbo.ParkingLots").FirstOrDefault();
             ParkingDatabaseInit(floor, m, n);
-
+            var query = from p in database.ParkingLots orderby p.Id select p;
+            return new ConfigDTO { StatusCode = 203, Success = true, Message = "ParkingLots Initialised", parkingLots = query };
         }
+    }
+    public class ConfigDTO
+    {
+        public bool Success { get; set; }
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+        public IEnumerable<ParkingLot>? parkingLots { get; set; }
     }
 }
