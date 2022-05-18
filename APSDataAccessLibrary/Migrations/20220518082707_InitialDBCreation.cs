@@ -10,16 +10,18 @@ namespace APSDataAccessLibrary.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ParkingLots",
+                name: "ParkingSchema",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Floors = table.Column<int>(type: "int", nullable: false),
+                    SizeX = table.Column<int>(type: "int", nullable: false),
+                    SizeY = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ParkingLots", x => x.Id);
+                    table.PrimaryKey("PK_ParkingSchema", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -28,20 +30,33 @@ namespace APSDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParkingLotId = table.Column<int>(type: "int", nullable: false),
-                    VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlateNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VIN = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
+                    PlateNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     parkTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ParkingLots",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Floor = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParkingLots", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_ParkingLots_ParkingLotId",
-                        column: x => x.ParkingLotId,
-                        principalTable: "ParkingLots",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_ParkingLots_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -50,8 +65,9 @@ namespace APSDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     VehicleId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -71,9 +87,9 @@ namespace APSDataAccessLibrary.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ParkingLot = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VehiclePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VehicleVIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParkingLot = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    VehiclePlate = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    VehicleVIN = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ParkTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BillValue = table.Column<int>(type: "int", nullable: false),
@@ -96,14 +112,14 @@ namespace APSDataAccessLibrary.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_VehicleId",
-                table: "Users",
+                name: "IX_ParkingLots_VehicleId",
+                table: "ParkingLots",
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_ParkingLotId",
-                table: "Vehicles",
-                column: "ParkingLotId");
+                name: "IX_Users_VehicleId",
+                table: "Users",
+                column: "VehicleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -112,13 +128,16 @@ namespace APSDataAccessLibrary.Migrations
                 name: "Bills");
 
             migrationBuilder.DropTable(
+                name: "ParkingLots");
+
+            migrationBuilder.DropTable(
+                name: "ParkingSchema");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
-
-            migrationBuilder.DropTable(
-                name: "ParkingLots");
         }
     }
 }

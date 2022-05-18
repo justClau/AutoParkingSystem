@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APSDataAccessLibrary.Migrations
 {
     [DbContext(typeof(ParkingContext))]
-    [Migration("20220516133517_InitialDBCreation")]
+    [Migration("20220518082707_InitialDBCreation")]
     partial class InitialDBCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace APSDataAccessLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DataAccess.Models.Bill", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.Bill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,18 +46,21 @@ namespace APSDataAccessLibrary.Migrations
 
                     b.Property<string>("ParkingLot")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("VehiclePlate")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("VehicleVIN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(17)
+                        .HasColumnType("nvarchar(17)");
 
                     b.HasKey("Id");
 
@@ -66,7 +69,7 @@ namespace APSDataAccessLibrary.Migrations
                     b.ToTable("Bills");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.ParkingLot", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.ParkingLot", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,16 +77,25 @@ namespace APSDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int?>("VehicleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("ParkingLots");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.User", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.ParkingSchema", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,12 +103,40 @@ namespace APSDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Floors")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeX")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeY")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ParkingSchema");
+                });
+
+            modelBuilder.Entity("APSDataAccessLibrary.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("VehicleId")
                         .HasColumnType("int");
@@ -108,7 +148,7 @@ namespace APSDataAccessLibrary.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Vehicle", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,30 +156,27 @@ namespace APSDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ParkingLotId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PlateNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("VIN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(17)
+                        .HasColumnType("nvarchar(17)");
 
                     b.Property<DateTime>("parkTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParkingLotId");
-
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Bill", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.Bill", b =>
                 {
-                    b.HasOne("DataAccess.Models.User", "User")
+                    b.HasOne("APSDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -148,24 +185,22 @@ namespace APSDataAccessLibrary.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.User", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.ParkingLot", b =>
                 {
-                    b.HasOne("DataAccess.Models.Vehicle", "Vehicle")
+                    b.HasOne("APSDataAccessLibrary.Models.Vehicle", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId");
 
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Vehicle", b =>
+            modelBuilder.Entity("APSDataAccessLibrary.Models.User", b =>
                 {
-                    b.HasOne("DataAccess.Models.ParkingLot", "ParkingLot")
+                    b.HasOne("APSDataAccessLibrary.Models.Vehicle", "Vehicle")
                         .WithMany()
-                        .HasForeignKey("ParkingLotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleId");
 
-                    b.Navigation("ParkingLot");
+                    b.Navigation("Vehicle");
                 });
 #pragma warning restore 612, 618
         }
