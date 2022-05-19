@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Folder Include="DAL\IRepositories\" />
   </ItemGroup>
 
 </Project>

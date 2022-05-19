@@ -18,17 +18,18 @@ namespace AutoParkingSystem.Controllers
         public ParkingLotsController(IDataAccess data)
         {
             this.data = data;
-            this.price = 0.9f;
+            this.price = 0.09f;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var freelots = data.GetFreeParkingLots();
             count = freelots.Count();
-            if (Username is null) 
+            if (Username is null)
                 return Ok(new
                 {
                     Warning = "You are not registered! You can see the parking lots but you won't be able to park!",
+                    FreeParkingLots = count,
                     freelots
                 });
             var usr = data.GetUserByUsername(Username);
@@ -39,7 +40,7 @@ namespace AutoParkingSystem.Controllers
                     Message = "Username not found! Please try again!"
                 });
             if (usr.IsAdmin) return Ok(data.GetParkingLots());
-            return Ok(freelots);   
+            return Ok(new { Count = count, freelots });   
         }
         [HttpPost]
         public async Task<IActionResult> ParkVehicle(Vehicle Vehicle)
