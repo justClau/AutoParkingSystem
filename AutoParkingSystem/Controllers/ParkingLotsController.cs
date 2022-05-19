@@ -7,14 +7,15 @@ namespace AutoParkingSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ParkingLots : ControllerBase
+    public class ParkingLotsController : ControllerBase
     {
+        private int count = -1;
         private float price;
         private readonly IDataAccess data;
         [FromHeader(Name = "username")]
         public string? Username { get; set; }
 
-        public ParkingLots(IDataAccess data)
+        public ParkingLotsController(IDataAccess data)
         {
             this.data = data;
             this.price = 0.9f;
@@ -23,6 +24,7 @@ namespace AutoParkingSystem.Controllers
         public async Task<IActionResult> GetAll()
         {
             var freelots = data.GetFreeParkingLots();
+            count = freelots.Count();
             if (Username is null) 
                 return Ok(new
                 {
@@ -48,7 +50,11 @@ namespace AutoParkingSystem.Controllers
             {
                 return BadRequest(new { error = true, Message = "User not found!" });
             }
-            Vehicle.parkTime = DateTime.Now;
+            if(count < 0)
+                count = data.GetFreeParkingLots().Count();
+            if (count <= 0)
+                return BadRequest(new { error = true, Message = "No parking lots are available right now! Please try again later" });
+            Vehicle.ParkTime = DateTime.Now;
             if (Vehicle.PlateNumber is null || Vehicle.VIN is null)
                 return BadRequest(new { error = true, Message = "Car data not supplied(Missing PlateNumer and/or VIN" });
             var veh = data.AddVehicle(Vehicle);
@@ -73,12 +79,12 @@ namespace AutoParkingSystem.Controllers
             var bill = new Bill
             {
                 User = usr,
-                ParkingLot = $"{parkingLot.Name} | Floor: {parkingLot.Floor}",
+                ParkingLot = $"{parkingLot.Name}|{parkingLot.Floor}",
                 VehiclePlate = Vehicle.PlateNumber,
                 VehicleVIN = Vehicle.VIN,
                 IssuedAt = DateTime.Now,
-                ParkTime = Vehicle.parkTime,
-                BillValue = (DateTime.Now - Vehicle.parkTime).TotalMinutes * this.price,
+                ParkTime = Vehicle.ParkTime,
+                BillValue = (DateTime.Now - Vehicle.ParkTime).TotalMinutes * this.price,
                 IsPaid = true
             };
             data.SaveBill(bill);
@@ -88,10 +94,41 @@ namespace AutoParkingSystem.Controllers
             data.Commit();
             return Ok(usr);
         }
-        [HttpGet("users")]
-        public async Task<IActionResult> GetUsers()
+        
+        [HttpGet("{Floor}/{ParkingLotName}")]
+        public async Task<IActionResult> ParkingLotInformation(int Floor, string ParkingLotName)
         {
-            return Ok(data.GetAllUsers());
+            var parkingLot = data.GetParkingLotByName(Floor, ParkingLotName);
+            if (parkingLot is null)
+                return NotFound(new { error = true, Message = "Parking lot was not found!" });
+            return Ok(new 
+            {
+                Success = true,
+                Floor = parkingLot.Floor,
+                ParkingLotName = parkingLot.Name,
+                Status = parkingLot.Vehicle == null ? "Free" : "Occupied" 
+            });
         }
+        [HttpPost("{Floor}/{ParkingLotName}")]
+        public async Task<IActionResult> ParkToSpecifiedParkingLot(int Floor, string ParkingLotName, [FromBody]Vehicle Vehicle)
+        {
+            var parkingLot = data.GetParkingLotByName(Floor, ParkingLotName);
+            var user = data.GetUserByUsername(Username);
+            if (user is null)
+                return BadRequest(new { error = true, Message = "Username not found!" });
+            if(parkingLot is null)
+                return NotFound(new { error = true, Message = "Parking lot was not found!" });
+            if (parkingLot.Vehicle is not null)
+                return BadRequest(new { error = true, Message = "Parking lot is not free!" });
+            if (Vehicle.VIN is null || Vehicle.PlateNumber is null)
+                return BadRequest(new { error = true, Message = "Please supply vehicle data" });
+            var veh = data.AddVehicle(Vehicle);
+            var parkingLot2 = data.SetParkingLotVehicle(parkingLot.Id,Vehicle);
+            var usr2 = data.SetUserVehicle(user.Id, Vehicle);
+            data.Commit();
+            return Ok(veh);
+
+        }
+
     }
 }

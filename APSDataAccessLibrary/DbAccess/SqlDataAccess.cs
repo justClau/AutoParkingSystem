@@ -1,5 +1,6 @@
 ﻿using APSDataAccessLibrary.Context;
 using APSDataAccessLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -44,7 +45,7 @@ namespace APSDataAccessLibrary.DbAccess
         }
         public IEnumerable<User> GetUsers()
         {
-            var query = from user in database.Users
+            var query = from user in database.Users.Include("Vehicle")
                         where user.IsAdmin == false
                         orderby user.Username
                         select user;
@@ -52,12 +53,17 @@ namespace APSDataAccessLibrary.DbAccess
         }
         public IEnumerable<User> GetAllUsers()
         {
-            var query = from user in database.Users
+            var query = from user in database.Users.Include("Vehicle")
                         select user;
             return query;
         }
         public User GetUserById(int id) => database.Users.Find(id);
-        public User GetUserByUsername(string name) => database.Users.Where(u => u.Username == name).FirstOrDefault();
+        public User GetUserByUsername(string name)
+        {
+            var usr = database.Users.Where(u => u.Username == name).FirstOrDefault();
+            database.Entry(usr).Reference(u => u.Vehicle).Load();
+            return usr;
+        }
         public User AddUser(User user)
         {
             database.Add(user);
@@ -110,7 +116,7 @@ namespace APSDataAccessLibrary.DbAccess
         public IEnumerable<Vehicle> GetParkedVehicles()
         {
             var query = from veh in database.Vehicles
-                        orderby veh.parkTime
+                        orderby veh.ParkTime
                         select veh;
             return query;
         }
@@ -119,7 +125,7 @@ namespace APSDataAccessLibrary.DbAccess
         public Vehicle GetVehicleByPlate(string Plate) => database.Vehicles.Where(veh => veh.PlateNumber == Plate).FirstOrDefault();
         public ParkingLot GetParkingLotByVehicle(int id) => database.ParkingLots.Where(p => p.Vehicle.Id == id).FirstOrDefault();
         public ParkingLot GetParkingLotById(int id) => database.ParkingLots.Find(id);
-        public ParkingLot GetParkingLotByName(string name) => database.ParkingLots.Where(veh => veh.Name.StartsWith(name)).FirstOrDefault();
+        public ParkingLot GetParkingLotByName(int floorNumber, string name) => database.ParkingLots.Include("Vehicle").Where(veh => veh.Floor == floorNumber && veh.Name.StartsWith(name)).FirstOrDefault();
         public IEnumerable<ParkingLot> GetParkingLots()
         {
             var query = from p in database.ParkingLots
@@ -129,7 +135,7 @@ namespace APSDataAccessLibrary.DbAccess
         }
         public IEnumerable<ParkingLot> GetFreeParkingLots()
         {
-            var query = from p in database.ParkingLots
+            var query = from p in database.ParkingLots.Include("Vehicle")
                         where p.Vehicle == null
                         select p;
             return query;

@@ -22,11 +22,28 @@ namespace AutoParkingSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            if(Username is null) return BadRequest(new {error = "true", message = "No username Specified!"});
+            if (Username is null) 
+                return BadRequest(new { error = "true", message = "No username Specified!" });
             var usr = data.GetUserByUsername(Username);
-            if(usr is null) return NotFound(new {error = "true", message = "Username is invalid"});
+            if (usr is null) return NotFound(new { error = "true", message = "Username is invalid" });
             if (!usr.IsAdmin) return BadRequest(new { error = "true", message = "You don't have the necessary permissions to access this route" });
-            return Ok(new {success = "true", message = $"Welcome back, {usr.FullName}"});
+            return Ok(new { success = "true", message = $"Welcome back, {usr.FullName}" });
+        }
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            if (Username is null)
+                return BadRequest(new { error = "true", message = "No username Specified!" });
+            var usr = data.GetUserByUsername(Username);
+            if (usr is null) return NotFound(new { error = "true", message = "Username is invalid" });
+            if (!usr.IsAdmin) return BadRequest(new { error = "true", message = "You don't have the necessary permissions to access this route" });
+            var users = data.GetAllUsers();
+            return Ok(new
+            {
+                error = false,
+                message = "The users are loaded!",
+                users = users
+            });
         }
         [HttpPost("users")]
         public async Task<IActionResult> AddUser([FromBody] User user)
@@ -39,11 +56,11 @@ namespace AutoParkingSystem.Controllers
             return Ok(new { success = "true", message = "User created successfully", user = usr });
         }
         [HttpPatch("users")]
-        public async Task<IActionResult> UpdateUser([FromBody] User user, [FromHeader(Name = "action")] string Action)
+        public async Task<IActionResult> UpdateUser([FromBody] string user, [FromHeader(Name = "action")] string Action)
         {
-            if (AdminVerify()) return BadRequest(new { error = "true", message = "Operation not allowed! Check username" });
+            if (!AdminVerify()) return BadRequest(new { error = "true", message = "Operation not allowed! Check username" });
             if (user == null) return BadRequest(new { error = "true", message = "No modifications specified" });
-            var usr = data.GetUserByUsername(user.Username);
+            var usr = data.GetUserByUsername(user);
             if (usr == null) return NotFound(new { error = "true", message = "User not found!" });
             if (Action.Equals("Admin"))
             {
@@ -67,7 +84,7 @@ namespace AutoParkingSystem.Controllers
                 {
                     VehicleVIN = veh1.VIN,
                     VehicleLicensePlate = veh1.PlateNumber,
-                    VehicleParkingDate = veh1.parkTime,
+                    VehicleParkingDate = veh1.ParkTime,
                     VehicleParkingSpot = parkingLot1.Name,
                     VehicleParkingFloor = parkingLot1.Floor
                 });
@@ -78,18 +95,18 @@ namespace AutoParkingSystem.Controllers
             {
                 VehicleVIN = veh.VIN,
                 VehicleLicensePlate = veh.PlateNumber,
-                VehicleParkingDate = veh.parkTime,
+                VehicleParkingDate = veh.ParkTime,
                 VehicleParkingSpot = parkingLot.Name,
                 VehicleParkingFloor = parkingLot.Floor
             });
-                
+
         }
 
         [HttpOptions]
         public async Task<IActionResult> Init()
         {
             var start = data.STARTCONFIG();
-            if(start.Success)
+            if (start.Success)
                 return Ok(start);
             return BadRequest(start);
         }

@@ -17,7 +17,7 @@ namespace APSDataAccessLibrary.Models
         [MaxLength(8)]
         public string PlateNumber { get; set; }
         [Required(ErrorMessage = "DATE REQUIRED FOR BILLING INFORMATION. PLEASE CONTACT DEV_TEAM")]
-        public DateTime parkTime { get; set; }
+        public DateTime ParkTime { get; set; }
 
     }
 }

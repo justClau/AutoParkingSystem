@@ -15,7 +15,7 @@ namespace APSDataAccessLibrary.DbAccess
         IEnumerable<ParkingLot> GetFreeParkingLots();
         IEnumerable<Vehicle> GetParkedVehicles();
         ParkingLot GetParkingLotById(int id);
-        ParkingLot GetParkingLotByName(string name);
+        ParkingLot GetParkingLotByName(int floorNumber, string name);
         ParkingLot GetParkingLotByVehicle(int id);
         IEnumerable<ParkingLot> GetParkingLots();
         IEnumerable<Bill> GetUserBills(int id);
