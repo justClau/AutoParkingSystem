@@ -71,36 +71,7 @@ namespace AutoParkingSystem.Controllers
             return BadRequest(new { error = "true", message = "No action atribute specified!" });
         }
 
-        [HttpGet("{CarString}")]
-        public async Task<IActionResult> FindCar(string CarString)
-        {
-            if (CarString.Length != 17 && CarString.Length != 8 && CarString.Length != 7 && CarString.Length != 6)
-                return BadRequest(new { error = true, message = "Search string is invalid" });
-            if (CarString.Length == 17)
-            {
-                var veh1 = data.GetVehicleByVIN(CarString);
-                var parkingLot1 = data.GetParkingLotByVehicle(veh1.Id);
-                return Ok(new
-                {
-                    VehicleVIN = veh1.VIN,
-                    VehicleLicensePlate = veh1.PlateNumber,
-                    VehicleParkingDate = veh1.ParkTime,
-                    VehicleParkingSpot = parkingLot1.Name,
-                    VehicleParkingFloor = parkingLot1.Floor
-                });
-            }
-            var veh = data.GetVehicleByPlate(CarString);
-            var parkingLot = data.GetParkingLotByVehicle(veh.Id);
-            return Ok(new
-            {
-                VehicleVIN = veh.VIN,
-                VehicleLicensePlate = veh.PlateNumber,
-                VehicleParkingDate = veh.ParkTime,
-                VehicleParkingSpot = parkingLot.Name,
-                VehicleParkingFloor = parkingLot.Floor
-            });
-
-        }
+        
 
         [HttpOptions]
         public async Task<IActionResult> Init()
