@@ -2,7 +2,7 @@
 
 namespace APSDataAccessLibrary.DAL.Repositories
 {
-    public interface IUsersRepository
+    public interface IUsersRepository : IRepository<User>
     {
         User GetByUsername(string name);
         IEnumerable<User> GetRegulars();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace APSDataAccessLibrary.DAL.Repositories
 {
-    public class VehicleRepository : Repository<Vehicle>, IVehicleRepository
+    public class VehicleRepository : Repository<Vehicle>, IVehicleRepository 
     {
         public ParkingContext ParkingContext { get { return context as ParkingContext; } }
         public VehicleRepository(ParkingContext context) : base(context) { }
