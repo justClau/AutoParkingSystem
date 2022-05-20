@@ -1,4 +1,5 @@
-﻿using APSDataAccessLibrary.Models;
+﻿using APSDataAccessLibrary.DAL;
+using APSDataAccessLibrary.Models;
 
 namespace APSDataAccessLibrary.DbAccess
 {

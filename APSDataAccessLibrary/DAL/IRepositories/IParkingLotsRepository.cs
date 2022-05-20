@@ -2,7 +2,7 @@
 
 namespace APSDataAccessLibrary.DAL.Repositories
 {
-    internal interface IParkingLotsRepository : IRepository<ParkingLot>
+    public interface IParkingLotsRepository : IRepository<ParkingLot>
     {
         ParkingLot AddVehicle(Vehicle Vehicle);
         ParkingLot GetByName(int FloorNumber, string Name);

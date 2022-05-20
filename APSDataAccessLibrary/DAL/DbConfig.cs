@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APSDataAccessLibrary.DbAccess
+namespace APSDataAccessLibrary.DAL
 {
     public class DbConfig
     {
