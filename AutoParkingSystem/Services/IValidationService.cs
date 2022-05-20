@@ -7,6 +7,8 @@ namespace AutoParkingSystem.Services
         ValidationResult isAdmin(string Username);
         ValidationResult UserValidation(User User);
         ValidationResult UserExists(string Username);
-        ValidationResult SearchTerm(string SearchTerm)
+        ValidationResult SearchTerm(string SearchTerm);
+        ValidationResult CarDetails(Vehicle Vehicle);
+        ValidationResult ParkingLotName(int FloorNumber, string Name);
     }
 }

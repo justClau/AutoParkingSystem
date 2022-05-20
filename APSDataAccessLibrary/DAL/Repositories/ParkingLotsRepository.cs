@@ -26,6 +26,11 @@ namespace APSDataAccessLibrary.DAL.Repositories
             .Where(veh => veh.Floor == FloorNumber && veh.Name.StartsWith(Name))
             .FirstOrDefault();
 
+        public override IEnumerable<ParkingLot> GetAll()
+            => ParkingContext.ParkingLots
+            .Include(p => p.Vehicle)
+            .ToList();
+
         public IEnumerable<ParkingLot> GetFree()
             => ParkingContext.ParkingLots
             .Include(p => p.Vehicle)
@@ -75,6 +80,11 @@ namespace APSDataAccessLibrary.DAL.Repositories
                 .FirstOrDefault();
             parkingLot.Vehicle = null;
             return parkingLot;
+        }
+
+        public ParkingSchema GetParkingConfiguration()
+        {
+            return ParkingContext.ParkingSchema.FirstOrDefault();
         }
     }
 }

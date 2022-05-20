@@ -11,5 +11,6 @@ namespace APSDataAccessLibrary.DAL.Repositories
         IEnumerable<ParkingLot> GetFreeOnFloor(int FloorNumber);
         ParkingLot RemoveVehicle(int VehicleID);
         ParkingLot SetVehicle(int ParkingLotID, Vehicle Vehicle);
+        ParkingSchema GetParkingConfiguration();
     }
 }

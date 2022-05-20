@@ -15,11 +15,11 @@ namespace APSDataAccessLibrary.DAL.Repositories
         {
             this.context = context;
         }
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
             return context.Set<TEntity>().Find(id);
         }
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return context.Set<TEntity>().ToList();
         }

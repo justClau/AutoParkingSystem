@@ -6,10 +6,12 @@ namespace AutoParkingSystem.Services
     public class ValidationService : IValidationService
     {
         private readonly IUsersRepository users;
+        private readonly IParkingLotsRepository parking;
 
-        public ValidationService(IUsersRepository users)
+        public ValidationService(IUsersRepository users, IParkingLotsRepository parking)
         {
             this.users = users;
+            this.parking = parking;
         }
 
         //Verify if user is admin
@@ -91,7 +93,7 @@ namespace AutoParkingSystem.Services
                 return new ValidationResult
                 {
                     Success = false,
-                    Message = "No user specidifed!"
+                    Message = "No user specified!"
                 };
             var user = users.GetByUsername(Username);
             if (user is null)
@@ -123,6 +125,55 @@ namespace AutoParkingSystem.Services
             };
         }
 
+        //Verify Car Input Details
+        public ValidationResult CarDetails(Vehicle Vehicle)
+        {
+            if (string.IsNullOrEmpty(Vehicle.VIN))
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "Must Enter VIN!"
+                };
+            if (string.IsNullOrEmpty(Vehicle.PlateNumber))
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "Must Enter Car's license plate number!"
+                };
+            return new ValidationResult
+            {
+                Success = true
+            };
+        }
+        public ValidationResult ParkingLotName(int FloorNumber, string Name)
+        {
+            var variabila1 = parking.GetParkingConfiguration();
+            if (variabila1.Floors <= FloorNumber)
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "FloorNumber is out of range!"
+                };
+            var variabila = parking.GetByName(FloorNumber, Name);
+            if (variabila == null)
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "Parking lot not found! Spellcheck the name!"
+                };
+            if (variabila.Vehicle is not null)
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "The chosen parking lot is not empty!"
+                };
+            return new ValidationResult
+            {
+                Success = true,
+                Message = "The Chosen Parking Lot is Free!"
+            };
+        }
+
     }
     public class ValidationResult
     {
@@ -131,5 +182,7 @@ namespace AutoParkingSystem.Services
         public int UserID { get; set; }
         public bool Admin { get; set; }
         public SearchType SearchType { get; set; }
+        public ParkingLot? ParkingLot { get; set; }
+        
     }
 }

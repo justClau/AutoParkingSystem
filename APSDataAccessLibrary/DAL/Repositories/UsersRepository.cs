@@ -22,6 +22,12 @@ namespace APSDataAccessLibrary.DAL.Repositories
                         select user;
             return query;
         }
+        public override User Get(int UserID)
+        {
+            var user = ParkingContext.Users.Find(UserID);
+            ParkingContext.Entry(user).Reference(u => u.Vehicle).Load();
+            return user;
+        }
         public User GetByUsername(string name)
         {
             return ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Username == name);
