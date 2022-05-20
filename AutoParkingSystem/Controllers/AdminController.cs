@@ -20,8 +20,12 @@ namespace AutoParkingSystem.Controllers
             this.admin = admin;
             this.validation = validation;
         }
+
         [FromHeader(Name = "username")]
         public string? Username { get; set; }
+
+        //GET: /api/admin
+        //Check admin rights
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -31,6 +35,8 @@ namespace AutoParkingSystem.Controllers
             return Ok(new { success = "true", message = $"Welcome back, {ok.Message}" });
         }
 
+        //GET: /api/admin/users
+        //See a list with all users
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
@@ -40,6 +46,8 @@ namespace AutoParkingSystem.Controllers
             return Ok(admin.ShowUsers());
         }
 
+        //POST: /api/admin/users
+        //Create a new user
         [HttpPost("users")]
         public async Task<IActionResult> AddUser([FromBody] User user)
         {
@@ -52,6 +60,8 @@ namespace AutoParkingSystem.Controllers
             return Ok(admin.CreateUser(user));
         }
         
+        //PATCH: /api/admin/users
+        //Update a user admin rights
         [HttpPatch("users")]
         public async Task<IActionResult> UpdateUser([FromBody] string user, [FromHeader(Name = "action")] string Action)
         {
@@ -64,8 +74,8 @@ namespace AutoParkingSystem.Controllers
             return Ok(admin.ToggleAdmin(okUser.UserID, okUser.Admin));
         }
 
-        
-
+        //OPTIONS: /api/admin
+        //Run the Parking Lots Table Configuration Engine
         [HttpOptions]
         public async Task<IActionResult> Init()
         {

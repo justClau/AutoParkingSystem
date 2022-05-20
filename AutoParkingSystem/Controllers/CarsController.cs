@@ -1,4 +1,5 @@
 ﻿using APSDataAccessLibrary.DbAccess;
+using AutoParkingSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,60 +9,44 @@ namespace AutoParkingSystem.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
+        private readonly IValidationService validation;
+        private readonly IVehicleService vehicle;
+
         [FromHeader(Name = "username")]
         public string? Username { get; set; }
 
-        private readonly IDataAccess data;
-        public CarsController(IDataAccess data)
+        public CarsController(IValidationService validation, IVehicleService vehicle)
         {
-            this.data = data;
+            this.validation = validation;
+            this.vehicle = vehicle;
         }
 
+        //GET: /api/cars
+        //SHOW ALL PARKED VEHICLES
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            if (Username is null || data.GetUserByUsername(Username).IsAdmin == false)
-                return BadRequest(new
-                {
-                    error = true,
-                    message = "You don't have access!"
-                });
-            var vehicles = data.GetParkedVehicles();
-            return Ok(new
-            {
-                error = false,
-                vehicles = vehicles
-            });
+            var user = validation.isAdmin(Username);
+            if (user.Success == false)
+                return BadRequest(user);
+
+            return Ok(vehicle.ShowVehicles());
         }
+
+        //GET /api/cars
+        //SEARCH FOR A CAR
         [HttpGet("{CarString}")]
         public async Task<IActionResult> FindCar(string CarString)
         {
-            if (CarString.Length != 17 && CarString.Length != 8 && CarString.Length != 7 && CarString.Length != 6)
-                return BadRequest(new { error = true, message = "Search string is invalid" });
-            if (CarString.Length == 17)
-            {
-                var veh1 = data.GetVehicleByVIN(CarString);
-                var parkingLot1 = data.GetParkingLotByVehicle(veh1.Id);
-                return Ok(new
-                {
-                    VehicleVIN = veh1.VIN,
-                    VehicleLicensePlate = veh1.PlateNumber,
-                    VehicleParkingDate = veh1.ParkTime,
-                    VehicleParkingSpot = parkingLot1.Name,
-                    VehicleParkingFloor = parkingLot1.Floor
-                });
-            }
-            var veh = data.GetVehicleByPlate(CarString);
-            var parkingLot = data.GetParkingLotByVehicle(veh.Id);
-            return Ok(new
-            {
-                VehicleVIN = veh.VIN,
-                VehicleLicensePlate = veh.PlateNumber,
-                VehicleParkingDate = veh.ParkTime,
-                VehicleParkingSpot = parkingLot.Name,
-                VehicleParkingFloor = parkingLot.Floor
-            });
+            var user = validation.isAdmin(CarString);
+            if (user.Success == false)
+                return BadRequest(user);
 
+            var search = validation.SearchTerm(CarString);
+            if (search.Success == false)
+                return BadRequest(search);
+
+            return Ok(vehicle.ShowVehicle(CarString, search.SearchType));
         }
     }
 }

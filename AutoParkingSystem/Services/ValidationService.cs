@@ -12,6 +12,7 @@ namespace AutoParkingSystem.Services
             this.users = users;
         }
 
+        //Verify if user is admin
         public ValidationResult isAdmin(string Username)
         {
             if (string.IsNullOrEmpty(Username))
@@ -40,7 +41,8 @@ namespace AutoParkingSystem.Services
             };
 
         }
-        //To Verify input data
+
+        //To Verify user input data
         public ValidationResult UserValidation(User User)
         {
             if (User == null)
@@ -81,6 +83,8 @@ namespace AutoParkingSystem.Services
                 Success = true
             };
         }
+
+        //verify if user exists in database
         public ValidationResult UserExists(string Username)
         {
             if (string.IsNullOrEmpty(Username))
@@ -103,6 +107,22 @@ namespace AutoParkingSystem.Services
             };
         }
 
+        //verify car search term
+        public ValidationResult SearchTerm(string SearchTerm)
+        {
+            if (SearchTerm.Length != 17 && SearchTerm.Length != 8 && SearchTerm.Length != 7 && SearchTerm.Length != 6)
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "The search criteria is not a valid License Plate Number or VIN"
+                };
+            return new ValidationResult
+            {
+                Success = true,
+                SearchType = SearchTerm.Length == 17 ? SearchType.VIN : SearchType.PlateNumber
+            };
+        }
+
     }
     public class ValidationResult
     {
@@ -110,5 +130,6 @@ namespace AutoParkingSystem.Services
         public string? Message { get; set; }
         public int UserID { get; set; }
         public bool Admin { get; set; }
+        public SearchType SearchType { get; set; }
     }
 }

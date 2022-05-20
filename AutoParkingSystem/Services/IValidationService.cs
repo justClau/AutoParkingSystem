@@ -7,5 +7,6 @@ namespace AutoParkingSystem.Services
         ValidationResult isAdmin(string Username);
         ValidationResult UserValidation(User User);
         ValidationResult UserExists(string Username);
+        ValidationResult SearchTerm(string SearchTerm)
     }
 }
