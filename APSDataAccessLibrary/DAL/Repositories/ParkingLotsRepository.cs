@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace APSDataAccessLibrary.DAL.Repositories
 {
-    internal class ParkingLotsRepository : Repository<ParkingLot>, IParkingLotsRepository
+    public class ParkingLotsRepository : Repository<ParkingLot>, IParkingLotsRepository
     {
         public ParkingContext ParkingContext { get { return context as ParkingContext; } }
         public ParkingLotsRepository(ParkingContext context) : base(context) { }
