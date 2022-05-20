@@ -4,7 +4,7 @@ using APSDataAccessLibrary.Models;
 
 namespace AutoParkingSystem.Services
 {
-    public class AdminService
+    public class AdminService : IAdminService
     {
         private readonly IUnitOfWork unit;
 
@@ -30,10 +30,9 @@ namespace AutoParkingSystem.Services
                 Message = $"User {User.FullName} has been created with username '{User.Username}'"
             };
         }
-        public AdminResults ToggleAdmin(string Username)
+        public AdminResults ToggleAdmin(int UserID, bool AdminStatus = true)
         {
-            var user = unit.Users.GetByUsername(Username);
-            unit.Users.SetAdminStatus(user.Id, !user.IsAdmin);
+            var user = unit.Users.SetAdminStatus(UserID, !AdminStatus);
             unit.Commit();
             return new AdminResults
             {

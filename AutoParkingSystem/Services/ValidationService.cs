@@ -3,7 +3,7 @@ using APSDataAccessLibrary.Models;
 
 namespace AutoParkingSystem.Services
 {
-    public class ValidationService
+    public class ValidationService : IValidationService
     {
         private readonly IUsersRepository users;
 
@@ -35,11 +35,12 @@ namespace AutoParkingSystem.Services
                 };
             return new ValidationResult
             {
-                Success = true
+                Success = true,
+                Message = user.FullName
             };
 
         }
-
+        //To Verify input data
         public ValidationResult UserValidation(User User)
         {
             if (User == null)
@@ -72,11 +73,33 @@ namespace AutoParkingSystem.Services
                 {
                     Success = false,
                     Message = "User already exists!",
-                    UserID = user.Id
+                    UserID = user.Id,
+                    Admin = user.IsAdmin
                 };
             return new ValidationResult
             {
                 Success = true
+            };
+        }
+        public ValidationResult UserExists(string Username)
+        {
+            if (string.IsNullOrEmpty(Username))
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "No user specidifed!"
+                };
+            var user = users.GetByUsername(Username);
+            if (user is null)
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "User not found!"
+                };
+            return new ValidationResult
+            {
+                Success = true,
+                UserID = user.Id
             };
         }
 
@@ -85,6 +108,7 @@ namespace AutoParkingSystem.Services
     {
         public bool Success { get; set; }
         public string? Message { get; set; }
-        public int? UserID { get; set; }
+        public int UserID { get; set; }
+        public bool Admin { get; set; }
     }
 }
