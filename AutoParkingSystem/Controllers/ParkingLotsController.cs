@@ -15,13 +15,15 @@ namespace AutoParkingSystem.Controllers
         private readonly IDataAccess data;
         private readonly IParkingService parking;
         private readonly IValidationService validation;
+        private readonly IBillingService billing;
 
-        public ParkingLotsController(IParkingService parking, IValidationService validation)
+        public ParkingLotsController(IParkingService parking, IValidationService validation, IBillingService billing)
         {
             this.data = data;
             this.price = 0.09f;
             this.parking = parking;
             this.validation = validation;
+            this.billing = billing;
         }
 
         [FromHeader(Name = "username")]
@@ -75,36 +77,8 @@ namespace AutoParkingSystem.Controllers
             if(vehicle.Success==false)
                 return BadRequest(vehicle);
 
-            //TODO BILL SERVICE!
+            vehicle.Bill = billing.CreateBill(user.UserID, vehicle.VehicleInfo, vehicle.Message).Bill;
             return Ok(vehicle);
-
-            //if (Username is null) return BadRequest(new { error = true, Message = "No Username Specified" });
-            //var usr = data.GetUserByUsername(Username);
-            //if (usr is null)
-            //{
-            //    return BadRequest(new { error = true, Message = "User not found!" });
-            //}
-            //if (usr.Vehicle is null) return NotFound(new { error = true, Message = "You don't have a parked vehicle!", usr.Vehicle.Id });
-            //var id = usr.Vehicle.Id;
-            //var Vehicle = data.GetVehicleById(id);
-            //var parkingLot = data.GetParkingLotByVehicle(id);
-            //var bill = new Bill
-            //{
-            //    User = usr,
-            //    ParkingLot = $"{parkingLot.Name}|{parkingLot.Floor}",
-            //    VehiclePlate = Vehicle.PlateNumber,
-            //    VehicleVIN = Vehicle.VIN,
-            //    IssuedAt = DateTime.Now,
-            //    ParkTime = Vehicle.ParkTime,
-            //    BillValue = (DateTime.Now - Vehicle.ParkTime).TotalMinutes * this.price,
-            //    IsPaid = true
-            //};
-            //data.SaveBill(bill);
-            //data.RemoveParkingLotVehicle(id);
-            //usr = data.RemoveUserVehicle(usr.Id);
-            //data.RemoveVehicle(id);
-            //data.Commit();
-            //return Ok(usr);
         }
         
         //GET: /api/parkinglots/{NumarEtaj}/{ParkingLotName}

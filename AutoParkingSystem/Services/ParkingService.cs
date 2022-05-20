@@ -91,14 +91,14 @@ namespace AutoParkingSystem.Services
             var Vehicle = user.Vehicle;
             DateTime StartTime = user.Vehicle.ParkTime;
             unit.Users.RemoveVehicle(Vehicle.Id);
-            unit.ParkingLots.RemoveVehicle(Vehicle.Id);
+            var parkingLot = unit.ParkingLots.RemoveVehicle(Vehicle.Id);
             unit.Vehicles.Remove(Vehicle);
             unit.Commit();
             return new ParkingResults
             {
                 Success = true,
-                Message = "Vehicle left the parking",
-                ParkingTime = StartTime
+                Message = $"{parkingLot.Floor}/{parkingLot.Name}",
+                VehicleInfo = Vehicle
             };
         }
     }
@@ -108,6 +108,7 @@ namespace AutoParkingSystem.Services
         public string Message { get; set; }
         public int Count { get; set; }
         public IEnumerable<ParkingLot> ParkingLots { get; set; }
-        public DateTime? ParkingTime { get; set; }
+        public Vehicle? VehicleInfo { get; set; }
+        public Bill? Bill { get; set; }
     }
 }

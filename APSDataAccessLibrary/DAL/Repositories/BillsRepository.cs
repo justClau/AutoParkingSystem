@@ -18,6 +18,11 @@ namespace APSDataAccessLibrary.DAL.Repositories
             : base(context)
         {
         }
+        public override IEnumerable<Bill> GetAll()
+        {
+            return ParkingContext.Bills.Include(b => b.User)
+                .ToList();
+        }
         public IEnumerable<Bill> GetUserBills(int UserID)
         {
             var query = from bill in ParkingContext.Bills.Include("User")
