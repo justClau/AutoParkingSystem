@@ -9,5 +9,6 @@ namespace APSDataAccessLibrary.DAL.Repositories
         User RemoveVehicle(int UserID);
         User SetAdminStatus(int UserID, bool AdminStatus);
         User SetVehicle(int UserID, Vehicle NewVehicle);
+        User UpdateUsername(int UserID, string NewUsername);
     }
 }

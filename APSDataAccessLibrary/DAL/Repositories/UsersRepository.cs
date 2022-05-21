@@ -56,5 +56,11 @@ namespace APSDataAccessLibrary.DAL.Repositories
             user.Vehicle = null;
             return user;
         }
+        public User UpdateUsername(int UserID, string NewUsername)
+        {
+            var user = ParkingContext.Users.Find(UserID);
+            user.Username = NewUsername;
+            return user;
+        }
     }
 }
