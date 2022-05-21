@@ -63,7 +63,7 @@ namespace AutoParkingSystem.Controllers
         //PATCH: /api/admin/users
         //Update a user admin rights
         [HttpPatch("users")]
-        public async Task<IActionResult> UpdateUser([FromBody] string user, [FromHeader(Name = "action")] string Action)
+        public async Task<IActionResult> UpdateUser([FromBody] string user)
         {
             var okAdmin = validation.isAdmin(Username);
             if (okAdmin.Success == false)

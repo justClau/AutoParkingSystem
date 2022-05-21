@@ -10,13 +10,11 @@ namespace AutoParkingSystem.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IDataAccess data;
         private readonly IUsersService users;
         private readonly IValidationService validation;
 
-        public UsersController(IDataAccess data, IUsersService users, IValidationService validation)
+        public UsersController(IUsersService users, IValidationService validation)
         {
-            this.data = data;
             this.users = users;
             this.validation = validation;
         }
@@ -52,6 +50,8 @@ namespace AutoParkingSystem.Controllers
             return Ok(status);
         }
 
+        //GET: /api/users/new
+        //Get INFO for registration
         [HttpGet("new")]
         public async Task<IActionResult> RegisterInfo()
         {
@@ -64,22 +64,20 @@ namespace AutoParkingSystem.Controllers
             });
         }
 
+        //POST: /api/users/new
+        //Register as a new user.
         [HttpPost("new")]
         public async Task<IActionResult> Register([FromBody]User User)
         {
-            if(User.Username is null || User.FullName is null)
-                return BadRequest(new 
-                { 
-                    error = true,
-                    message = "Username or Full name missing!", 
-                    User = new {
-                        Username = "string, must be unique",
-                        FullName = "Your full name"
-                    } 
-                });
+            if (Username is not null && validation.UserExists(Username).Success == true)
+                return BadRequest(new { Success = false, Message = "You are already logged in" });
+            
+            var user = validation.UserValidation(User);
+            if (user.Success == false)
+                return BadRequest(user);
+           
             User.IsAdmin = false;
-            var user = data.AddUser(User);
-            return Ok(user);
+            return Ok(users.Register(User));
         }
     }
 }

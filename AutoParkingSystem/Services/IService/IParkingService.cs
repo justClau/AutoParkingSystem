@@ -10,5 +10,6 @@ namespace AutoParkingSystem.Services
         ParkingResults ShowAllParkingLots();
         ParkingResults ShowFreeParkingLots();
         ParkingResults UnPark(int UserID);
+        ParkingResults GetFloorInformation(int FloorNumber);
     }
 }

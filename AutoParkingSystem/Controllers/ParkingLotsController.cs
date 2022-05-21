@@ -80,6 +80,20 @@ namespace AutoParkingSystem.Controllers
             vehicle.Bill = billing.CreateBill(user.UserID, vehicle.VehicleInfo, vehicle.Message).Bill;
             return Ok(vehicle);
         }
+
+        //GET: /api/ParkingLots/{NumarEtaj}
+        //Show all free parking lots on the specified floor
+        [HttpGet("{Floor}")]
+        public async Task<IActionResult> FloorInformation(int Floor)
+        {
+            var user = validation.UserExists(Username);
+            if (user.Success == false)
+                return BadRequest(user);
+            var floor = parking.GetFloorInformation(Floor);
+            if (floor.Success == false)
+                return BadRequest(floor);
+            return Ok(floor);
+        }
         
         //GET: /api/parkinglots/{NumarEtaj}/{ParkingLotName}
         //Show info about a specific parking lot

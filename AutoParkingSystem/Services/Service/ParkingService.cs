@@ -101,6 +101,22 @@ namespace AutoParkingSystem.Services
                 VehicleInfo = Vehicle
             };
         }
+        public ParkingResults GetFloorInformation(int FloorNumber)
+        {
+            var variabila1 = unit.ParkingLots.GetParkingConfiguration();
+            if (variabila1.Floors <= FloorNumber)
+                return new ParkingResults
+                {
+                    Success = false,
+                    Message = "Floor Numer is out of range! Please Try again"
+                };
+            var floor = unit.ParkingLots.GetFreeOnFloor(FloorNumber);
+            return new ParkingResults
+            {
+                Success = true,
+                ParkingLots = floor
+            };
+        }
     }
     public class ParkingResults
     {
