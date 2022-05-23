@@ -1,5 +1,4 @@
-﻿using APSDataAccessLibrary.DbAccess;
-using APSDataAccessLibrary.Models;
+﻿using APSDataAccessLibrary.Models;
 using AutoParkingSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,17 +9,12 @@ namespace AutoParkingSystem.Controllers
     [ApiController]
     public class ParkingLotsController : ControllerBase
     {
-        private int count = -1;
-        private float price;
-        private readonly IDataAccess data;
         private readonly IParkingService parking;
         private readonly IValidationService validation;
         private readonly IBillingService billing;
 
         public ParkingLotsController(IParkingService parking, IValidationService validation, IBillingService billing)
         {
-            this.data = data;
-            this.price = 0.09f;
             this.parking = parking;
             this.validation = validation;
             this.billing = billing;
