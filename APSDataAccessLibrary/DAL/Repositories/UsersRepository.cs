@@ -28,6 +28,10 @@ namespace APSDataAccessLibrary.DAL.Repositories
             ParkingContext.Entry(user).Reference(u => u.Vehicle).Load();
             return user;
         }
+        public override IEnumerable<User> GetAll()
+        {
+            return ParkingContext.Users.Include(u => u.Vehicle).ToList();
+        }
         public User GetByUsername(string name)
         {
             return ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Username == name);

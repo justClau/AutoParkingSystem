@@ -11,7 +11,7 @@ namespace APSDataAccessLibrary.Models
     {
         public int Id { get; set; }
         [Required]
-        public int Floor { get; set; }
+        public int FloorNumber { get; set; }
         [Required]
         [MaxLength(10)]
         public string Name { get; set; }

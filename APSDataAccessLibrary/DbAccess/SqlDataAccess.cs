@@ -131,7 +131,7 @@ namespace APSDataAccessLibrary.DbAccess
         public IEnumerable<Vehicle> GetParkedVehicles()
         {
             var query = from veh in database.Vehicles
-                        orderby veh.ParkTime
+                        orderby veh.StartingTime
                         select veh;
             return query;
         }
@@ -146,7 +146,7 @@ namespace APSDataAccessLibrary.DbAccess
         //
         public ParkingLot GetParkingLotById(int id) => database.ParkingLots.Find(id);
         //
-        public ParkingLot GetParkingLotByName(int floorNumber, string name) => database.ParkingLots.Include("Vehicle").Where(veh => veh.Floor == floorNumber && veh.Name.StartsWith(name)).FirstOrDefault();
+        public ParkingLot GetParkingLotByName(int floorNumber, string name) => database.ParkingLots.Include("Vehicle").Where(veh => veh.FloorNumber == floorNumber && veh.Name.StartsWith(name)).FirstOrDefault();
         //
         public IEnumerable<ParkingLot> GetParkingLots()
         {
@@ -169,7 +169,7 @@ namespace APSDataAccessLibrary.DbAccess
             var schema = database.ParkingSchema.FirstOrDefault();
             if (FloorNumber > schema.Floors) return null;
             var query = from p in database.ParkingLots
-                        where p.Floor == FloorNumber
+                        where p.FloorNumber == FloorNumber
                         orderby p.Id
                         select p;
             return query;

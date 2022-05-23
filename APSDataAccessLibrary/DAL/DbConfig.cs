@@ -41,7 +41,7 @@ namespace APSDataAccessLibrary.DAL
                     {
                         var row = new ParkingLot
                         {
-                            Floor = i,
+                            FloorNumber = i,
                             Name = $"{(char)(val + j)}{k + 1}"
                         };
                         database.ParkingLots.Add(row);

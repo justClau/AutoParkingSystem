@@ -19,9 +19,9 @@ namespace AutoParkingSystem.Services
             if (user.Vehicle is not null)
             {
                 var parkingLot = unit.ParkingLots.GetByVehicle(user.Vehicle.Id);
-                var time = (DateTime.Now - user.Vehicle.ParkTime).TotalMinutes;
+                var time = (DateTime.Now - user.Vehicle.StartingTime).TotalMinutes;
                 var msg2 = $"Your Vehicle with Registration Number {user.Vehicle.PlateNumber}";
-                var msg3 = $"Is parked at {parkingLot.Name} floor {parkingLot.Floor}.";
+                var msg3 = $"Is parked at {parkingLot.Name} floor {parkingLot.FloorNumber}.";
                 var msg4 = $"You parked your vehicle {time} minutes ago";
                 return new UsersResult
                 {

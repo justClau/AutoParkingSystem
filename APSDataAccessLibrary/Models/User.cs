@@ -17,7 +17,7 @@ namespace APSDataAccessLibrary.Models
         [Required]
         [MaxLength(50)]
         public string FullName { get; set; }
-        [Required(ErrorMessage ="Must specify user rights")]
+        [Required]
         public bool IsAdmin { get; set; }
 
     }

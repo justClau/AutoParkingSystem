@@ -39,13 +39,13 @@ namespace APSDataAccessLibrary.Migrations
                     b.Property<DateTime>("IssuedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ParkTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("ParkingLot")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("StartingTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -75,7 +75,7 @@ namespace APSDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Floor")
+                    b.Property<int>("FloorNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -159,13 +159,13 @@ namespace APSDataAccessLibrary.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
+                    b.Property<DateTime>("StartingTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("VIN")
                         .IsRequired()
                         .HasMaxLength(17)
                         .HasColumnType("nvarchar(17)");
-
-                    b.Property<DateTime>("parkTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

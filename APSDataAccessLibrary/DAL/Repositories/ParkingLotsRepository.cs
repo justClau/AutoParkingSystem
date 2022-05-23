@@ -23,7 +23,7 @@ namespace APSDataAccessLibrary.DAL.Repositories
         public ParkingLot GetByName(int FloorNumber, string Name)
             => ParkingContext.ParkingLots
             .Include("Vehicle")
-            .Where(veh => veh.Floor == FloorNumber && veh.Name.StartsWith(Name))
+            .Where(veh => veh.FloorNumber == FloorNumber && veh.Name.StartsWith(Name))
             .FirstOrDefault();
 
         public override IEnumerable<ParkingLot> GetAll()
@@ -40,7 +40,7 @@ namespace APSDataAccessLibrary.DAL.Repositories
         public IEnumerable<ParkingLot> GetFreeOnFloor(int FloorNumber)
             => ParkingContext.ParkingLots
             .Include(p => p.Vehicle)
-            .Where(p => p.Floor == FloorNumber && p.Vehicle == null)
+            .Where(p => p.FloorNumber == FloorNumber && p.Vehicle == null)
             .ToList();
 
         public ParkingLot SetVehicle(int ParkingLotID, Vehicle Vehicle)

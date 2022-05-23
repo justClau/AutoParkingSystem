@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace APSDataAccessLibrary.Migrations
 {
-    public partial class InitialDBCreation : Migration
+    public partial class InitialDBRefactor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,7 @@ namespace APSDataAccessLibrary.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VIN = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     PlateNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    parkTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    StartingTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,7 +45,7 @@ namespace APSDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Floor = table.Column<int>(type: "int", nullable: false),
+                    FloorNumber = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     VehicleId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -91,8 +91,8 @@ namespace APSDataAccessLibrary.Migrations
                     VehiclePlate = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     VehicleVIN = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ParkTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BillValue = table.Column<int>(type: "int", nullable: false),
+                    StartingTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BillValue = table.Column<double>(type: "float", nullable: false),
                     IsPaid = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

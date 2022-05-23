@@ -51,7 +51,7 @@ namespace AutoParkingSystem.Services
                     Message = "Operation not allowed! You Already have a vehicle"
                 };
 
-            Vehicle.ParkTime = DateTime.Now;
+            Vehicle.StartingTime = DateTime.Now;
             user = unit.Users.SetVehicle(UserID, Vehicle);
             unit.Commit();
             unit.ParkingLots.AddVehicle(user.Vehicle);
@@ -72,7 +72,7 @@ namespace AutoParkingSystem.Services
                     Message = "Operation not allowed! You Already have a vehicle"
                 };
 
-            Vehicle.ParkTime = DateTime.Now;
+            Vehicle.StartingTime = DateTime.Now;
             user = unit.Users.SetVehicle(UserID, Vehicle);
             unit.Commit();
             unit.ParkingLots.SetVehicle(ParkingLotID, user.Vehicle);
@@ -93,7 +93,7 @@ namespace AutoParkingSystem.Services
                     Message = "Operations not allowed! You don't have any parked vehicles"
                 };
             var Vehicle = user.Vehicle;
-            DateTime StartTime = user.Vehicle.ParkTime;
+            DateTime StartTime = user.Vehicle.StartingTime;
             unit.Users.RemoveVehicle(Vehicle.Id);
             var parkingLot = unit.ParkingLots.RemoveVehicle(Vehicle.Id);
             unit.Vehicles.Remove(Vehicle);
@@ -101,7 +101,7 @@ namespace AutoParkingSystem.Services
             return new ParkingResults
             {
                 Success = true,
-                Message = $"{parkingLot.Floor}/{parkingLot.Name}",
+                Message = $"{parkingLot.FloorNumber}/{parkingLot.Name}",
                 VehicleInfo = Vehicle
             };
         }

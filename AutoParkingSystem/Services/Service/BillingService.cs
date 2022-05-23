@@ -23,8 +23,8 @@ namespace AutoParkingSystem.Services
                 VehiclePlate = Vehicle.PlateNumber,
                 VehicleVIN = Vehicle.VIN,
                 IssuedAt = DateTime.Now,
-                ParkTime = Vehicle.ParkTime,
-                BillValue = (DateTime.Now - Vehicle.ParkTime).TotalMinutes * this.price,
+                StartingTime = Vehicle.StartingTime,
+                BillValue = (DateTime.Now - Vehicle.StartingTime).TotalMinutes * this.price,
                 IsPaid = true
             };
             unit.Bills.Add(bill);

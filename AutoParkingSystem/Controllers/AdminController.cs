@@ -81,7 +81,7 @@ namespace AutoParkingSystem.Controllers
         [HttpOptions]
         public async Task<IActionResult> Init([FromHeader(Name = "password")]string Password)
         {
-            var adminPassword = configuration.GetSection("password");
+            var adminPassword = configuration.GetSection("Password").Value;
             if (string.IsNullOrEmpty(Password) || Password.Equals(adminPassword) == false)
                 return BadRequest(new
                 {

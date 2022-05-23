@@ -23,7 +23,7 @@ namespace APSDataAccessLibrary.Models
         [Required]
         public DateTime IssuedAt { get; set; }
         [Required]
-        public DateTime ParkTime { get; set; }
+        public DateTime StartingTime { get; set; }
         [Required]
         public double BillValue { get; set; }
         [Required]
