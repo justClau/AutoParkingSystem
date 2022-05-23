@@ -14,11 +14,13 @@ namespace AutoParkingSystem.Controllers
     {
         private readonly IAdminService admin;
         private readonly IValidationService validation;
+        private readonly IConfiguration configuration;
 
-        public AdminController(IAdminService admin, IValidationService validation)
+        public AdminController(IAdminService admin, IValidationService validation, IConfiguration configuration)
         {
             this.admin = admin;
             this.validation = validation;
+            this.configuration = configuration.GetSection("ParkingSystem");
         }
 
         [FromHeader(Name = "username")]
@@ -77,8 +79,15 @@ namespace AutoParkingSystem.Controllers
         //OPTIONS: /api/admin
         //Run the Parking Lots Table Configuration Engine
         [HttpOptions]
-        public async Task<IActionResult> Init()
+        public async Task<IActionResult> Init([FromHeader(Name = "password")]string Password)
         {
+            var adminPassword = configuration.GetSection("password");
+            if (string.IsNullOrEmpty(Password) || Password.Equals(adminPassword) == false)
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = "The Password required for database configuration is wrong! Please try again!"
+                });
             var start = admin.StartConfiguration();
             if (start.Success)
                 return Ok(start);

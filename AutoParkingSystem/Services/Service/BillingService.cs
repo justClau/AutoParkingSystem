@@ -41,7 +41,7 @@ namespace AutoParkingSystem.Services
             return new BillingResult
             {
                 Success = true,
-                Message = "You have all the bills in the list",
+                Message = "You have all the bills in the following list",
                 Bills = bills
             };
         }

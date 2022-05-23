@@ -50,6 +50,8 @@ namespace AutoParkingSystem.Services
                     Success = false,
                     Message = "Operation not allowed! You Already have a vehicle"
                 };
+
+            Vehicle.ParkTime = DateTime.Now;
             user = unit.Users.SetVehicle(UserID, Vehicle);
             unit.Commit();
             unit.ParkingLots.AddVehicle(user.Vehicle);
@@ -69,6 +71,8 @@ namespace AutoParkingSystem.Services
                     Success = false,
                     Message = "Operation not allowed! You Already have a vehicle"
                 };
+
+            Vehicle.ParkTime = DateTime.Now;
             user = unit.Users.SetVehicle(UserID, Vehicle);
             unit.Commit();
             unit.ParkingLots.SetVehicle(ParkingLotID, user.Vehicle);

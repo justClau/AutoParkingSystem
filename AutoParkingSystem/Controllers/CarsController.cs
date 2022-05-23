@@ -38,7 +38,7 @@ namespace AutoParkingSystem.Controllers
         [HttpGet("{CarString}")]
         public async Task<IActionResult> FindCar(string CarString)
         {
-            var user = validation.isAdmin(CarString);
+            var user = validation.isAdmin(Username);
             if (user.Success == false)
                 return BadRequest(user);
 
