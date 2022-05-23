@@ -23,10 +23,10 @@ namespace APSDataAccessLibrary.DAL.Repositories
             return ParkingContext.Bills.Include(b => b.User)
                 .ToList();
         }
-        public IEnumerable<Bill> GetUserBills(int UserID)
+        public IEnumerable<Bill> GetBillsByUserId(int userID)
         {
-            var query = from bill in ParkingContext.Bills.Include("User")
-                        where bill.User.Id == UserID
+            var query = from bill in ParkingContext.Bills.Include(u => u.User)
+                        where bill.User.Id == userID
                         orderby bill.BillValue descending
                         select bill;
             return query;

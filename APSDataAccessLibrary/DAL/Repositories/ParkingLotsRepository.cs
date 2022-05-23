@@ -14,16 +14,16 @@ namespace APSDataAccessLibrary.DAL.Repositories
         public ParkingContext ParkingContext { get { return context as ParkingContext; } }
         public ParkingLotsRepository(ParkingContext context) : base(context) { }
 
-        public ParkingLot GetByVehicle(int VehicleID)
+        public ParkingLot GetByVehicle(int vehicleID)
             => ParkingContext.ParkingLots
-            .Include(u => u.Vehicle)
-            .Where(p => p.Vehicle.Id == VehicleID)
+            .Include(p => p.Vehicle)
+            .Where(p => p.Vehicle.Id == vehicleID)
             .FirstOrDefault();
 
-        public ParkingLot GetByName(int FloorNumber, string Name)
+        public ParkingLot GetByName(int floorNumber, string name)
             => ParkingContext.ParkingLots
-            .Include("Vehicle")
-            .Where(veh => veh.FloorNumber == FloorNumber && veh.Name.StartsWith(Name))
+            .Include(p => p.Vehicle)
+            .Where(veh => veh.FloorNumber == floorNumber && veh.Name.StartsWith(name))
             .FirstOrDefault();
 
         public override IEnumerable<ParkingLot> GetAll()
@@ -37,15 +37,15 @@ namespace APSDataAccessLibrary.DAL.Repositories
             .Where(p => p.Vehicle == null)
             .ToList();
 
-        public IEnumerable<ParkingLot> GetFreeOnFloor(int FloorNumber)
+        public IEnumerable<ParkingLot> GetFreeOnFloor(int floorNumber)
             => ParkingContext.ParkingLots
             .Include(p => p.Vehicle)
-            .Where(p => p.FloorNumber == FloorNumber && p.Vehicle == null)
+            .Where(p => p.FloorNumber == floorNumber && p.Vehicle == null)
             .ToList();
 
-        public ParkingLot SetVehicle(int ParkingLotID, Vehicle Vehicle)
+        public ParkingLot SetVehicle(int parkingLotID, Vehicle vehicle)
         {
-            var parkingLot = ParkingContext.ParkingLots.Find(ParkingLotID);
+            var parkingLot = ParkingContext.ParkingLots.Find(parkingLotID);
             ParkingContext.Entry(parkingLot).Reference(v => v.Vehicle).Load();
 
             if (parkingLot == null)
@@ -54,11 +54,11 @@ namespace APSDataAccessLibrary.DAL.Repositories
             if (parkingLot.Vehicle != null)
                 return null;
 
-            parkingLot.Vehicle = Vehicle;
+            parkingLot.Vehicle = vehicle;
             return parkingLot;
         }
 
-        public ParkingLot AddVehicle(Vehicle Vehicle)
+        public ParkingLot AddVehicle(Vehicle vehicle)
         {
             var parkingLot = ParkingContext.ParkingLots
                 .Include(p => p.Vehicle)
@@ -68,15 +68,15 @@ namespace APSDataAccessLibrary.DAL.Repositories
             if (parkingLot == null)
                 return null;
 
-            parkingLot.Vehicle = Vehicle;
+            parkingLot.Vehicle = vehicle;
             return parkingLot;
         }
 
-        public ParkingLot RemoveVehicle(int VehicleID)
+        public ParkingLot RemoveVehicle(int vehicleID)
         {
             var parkingLot = ParkingContext.ParkingLots
                 .Include(p => p.Vehicle)
-                .Where(p => p.Vehicle.Id == VehicleID)
+                .Where(p => p.Vehicle.Id == vehicleID)
                 .FirstOrDefault();
             parkingLot.Vehicle = null;
             return parkingLot;

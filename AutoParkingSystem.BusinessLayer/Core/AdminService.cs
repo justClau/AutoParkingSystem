@@ -1,8 +1,10 @@
 ﻿using APSDataAccessLibrary.DAL;
 using APSDataAccessLibrary.DAL.Repositories;
 using APSDataAccessLibrary.Models;
+using AutoParkingSystem.BusinessLayer.Domain;
+using AutoParkingSystem.BusinessLayer.DTO;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Core
 {
     public class AdminService : IAdminService
     {
@@ -12,7 +14,7 @@ namespace AutoParkingSystem.Services
         {
             this.unit = unit;
         }
-        public AdminResults ShowUsers()
+        public AdminResults GetUsers()
         {
             return new AdminResults
             {
@@ -48,11 +50,5 @@ namespace AutoParkingSystem.Services
                 Success = start.Success
             };
         }
-    }
-    public class AdminResults
-    {
-        public bool Success { get; set; }
-        public string? Message { get; set; }
-        public IEnumerable<User>? AllUsers { get; set; }
     }
 }

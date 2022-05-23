@@ -3130,6 +3130,19 @@
         "runtime": {
           "bin/placeholder/APSDataAccessLibrary.dll": {}
         }
+      },
+      "AutoParkingSystem.BusinessLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "APSDataAccessLibrary": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutoParkingSystem.BusinessLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoParkingSystem.BusinessLayer.dll": {}
+        }
       }
     }
   },
@@ -9668,11 +9681,17 @@
       "type": "project",
       "path": "../APSDataAccessLibrary/APSDataAccessLibrary.csproj",
       "msbuildProject": "../APSDataAccessLibrary/APSDataAccessLibrary.csproj"
+    },
+    "AutoParkingSystem.BusinessLayer/1.0.0": {
+      "type": "project",
+      "path": "../AutoParkingSystem.BusinessLayer/AutoParkingSystem.BusinessLayer.csproj",
+      "msbuildProject": "../AutoParkingSystem.BusinessLayer/AutoParkingSystem.BusinessLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "APSDataAccessLibrary >= 1.0.0",
+      "AutoParkingSystem.BusinessLayer >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.5",
@@ -9709,6 +9728,9 @@
           "projectReferences": {
             "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\APSDataAccessLibrary\\APSDataAccessLibrary.csproj": {
               "projectPath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\APSDataAccessLibrary\\APSDataAccessLibrary.csproj"
+            },
+            "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\AutoParkingSystem.BusinessLayer\\AutoParkingSystem.BusinessLayer.csproj": {
+              "projectPath": "C:\\Users\\claudiu.cirmaci\\Desktop\\Project\\AutoParkingApp\\AutoParkingSystem.BusinessLayer\\AutoParkingSystem.BusinessLayer.csproj"
             }
           }
         }

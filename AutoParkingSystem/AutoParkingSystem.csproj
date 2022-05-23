@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APSDataAccessLibrary\APSDataAccessLibrary.csproj" />
+	  <ProjectReference Include="..\APSDataAccessLibrary\APSDataAccessLibrary.csproj" />
+	  <ProjectReference Include="..\AutoParkingSystem.BusinessLayer\AutoParkingSystem.BusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

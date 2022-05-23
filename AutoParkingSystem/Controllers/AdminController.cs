@@ -1,9 +1,7 @@
 ﻿
 using APSDataAccessLibrary.Models;
-using AutoParkingSystem.Services;
-using Microsoft.AspNetCore.Http;
+using AutoParkingSystem.BusinessLayer.Domain;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace AutoParkingSystem.Controllers
 {
@@ -30,7 +28,7 @@ namespace AutoParkingSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var ok = validation.isAdmin(Username);
+            var ok = validation.IsAdmin(Username);
             if (ok.Success == false)
                 return BadRequest(ok);
             return Ok(new { success = "true", message = $"Welcome back, {ok.Message}" });
@@ -41,10 +39,10 @@ namespace AutoParkingSystem.Controllers
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
-            var ok = validation.isAdmin(Username);
+            var ok = validation.IsAdmin(Username);
             if (ok.Success == false)
                 return BadRequest(ok);
-            return Ok(admin.ShowUsers());
+            return Ok(admin.GetUsers());
         }
 
         //POST: /api/admin/users
@@ -52,7 +50,7 @@ namespace AutoParkingSystem.Controllers
         [HttpPost("users")]
         public async Task<IActionResult> AddUser([FromBody] User user)
         {
-            var okAdmin = validation.isAdmin(Username);
+            var okAdmin = validation.IsAdmin(Username);
             if (okAdmin.Success == false)
                 return BadRequest(okAdmin);
             var okUser = validation.UserValidation(user);
@@ -66,7 +64,7 @@ namespace AutoParkingSystem.Controllers
         [HttpPatch("users")]
         public async Task<IActionResult> UpdateUser([FromBody] string user)
         {
-            var okAdmin = validation.isAdmin(Username);
+            var okAdmin = validation.IsAdmin(Username);
             if (okAdmin.Success == false)
                 return BadRequest(okAdmin);
             var okUser = validation.UserExists(user);

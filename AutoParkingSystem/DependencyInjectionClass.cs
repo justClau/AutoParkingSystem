@@ -2,8 +2,10 @@
 using APSDataAccessLibrary.DAL;
 using APSDataAccessLibrary.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using AutoParkingSystem.BusinessLayer.Core;
+using AutoParkingSystem.BusinessLayer.Domain;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem
 {
     public static class DependencyInjectionClass
     {

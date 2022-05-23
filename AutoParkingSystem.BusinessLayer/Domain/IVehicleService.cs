@@ -1,4 +1,7 @@
-﻿namespace AutoParkingSystem.Services
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using AutoParkingSystem.BusinessLayer.Core;
+
+namespace AutoParkingSystem.BusinessLayer.Domain
 {
     public interface IVehicleService
     {

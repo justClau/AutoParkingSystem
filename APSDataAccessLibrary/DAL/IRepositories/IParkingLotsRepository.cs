@@ -4,13 +4,13 @@ namespace APSDataAccessLibrary.DAL.Repositories
 {
     public interface IParkingLotsRepository : IRepository<ParkingLot>
     {
-        ParkingLot AddVehicle(Vehicle Vehicle);
-        ParkingLot GetByName(int FloorNumber, string Name);
-        ParkingLot GetByVehicle(int VehicleID);
+        ParkingLot AddVehicle(Vehicle vehicle);
+        ParkingLot GetByName(int floorNumber, string name);
+        ParkingLot GetByVehicle(int vehicleID);
         IEnumerable<ParkingLot> GetFree();
-        IEnumerable<ParkingLot> GetFreeOnFloor(int FloorNumber);
-        ParkingLot RemoveVehicle(int VehicleID);
-        ParkingLot SetVehicle(int ParkingLotID, Vehicle Vehicle);
+        IEnumerable<ParkingLot> GetFreeOnFloor(int floorNumber);
+        ParkingLot RemoveVehicle(int vehicleID);
+        ParkingLot SetVehicle(int parkingLotID, Vehicle vehicle);
         ParkingSchema GetParkingConfiguration();
     }
 }

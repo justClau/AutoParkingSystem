@@ -1,7 +1,9 @@
-﻿using APSDataAccessLibrary.DAL.Repositories;
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using APSDataAccessLibrary.DAL.Repositories;
 using APSDataAccessLibrary.Models;
+using AutoParkingSystem.BusinessLayer.Domain;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Core
 {
     public class ValidationService : IValidationService
     {
@@ -15,7 +17,7 @@ namespace AutoParkingSystem.Services
         }
 
         //Verify if user is admin
-        public ValidationResult isAdmin(string Username)
+        public ValidationResult IsAdmin(string Username)
         {
             if (string.IsNullOrEmpty(Username))
                 return new ValidationResult
@@ -126,7 +128,7 @@ namespace AutoParkingSystem.Services
         }
 
         //Verify Car Input Details
-        public ValidationResult CarDetails(Vehicle Vehicle)
+        public ValidationResult VerifyCarDetails(Vehicle Vehicle)
         {
             if (string.IsNullOrEmpty(Vehicle.VIN))
                 return new ValidationResult
@@ -174,15 +176,5 @@ namespace AutoParkingSystem.Services
             };
         }
 
-    }
-    public class ValidationResult
-    {
-        public bool Success { get; set; }
-        public string? Message { get; set; }
-        public int UserID { get; set; }
-        public bool Admin { get; set; }
-        public SearchType SearchType { get; set; }
-        public ParkingLot? ParkingLot { get; set; }
-        
     }
 }

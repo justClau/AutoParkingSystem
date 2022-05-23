@@ -1,6 +1,8 @@
-﻿using APSDataAccessLibrary.Models;
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using APSDataAccessLibrary.Models;
+using AutoParkingSystem.BusinessLayer.Core;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Domain
 {
     public interface IParkingService
     {

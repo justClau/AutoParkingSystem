@@ -1,6 +1,5 @@
 ﻿using APSDataAccessLibrary.Models;
-using AutoParkingSystem.Services;
-using Microsoft.AspNetCore.Http;
+using AutoParkingSystem.BusinessLayer.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoParkingSystem.Controllers

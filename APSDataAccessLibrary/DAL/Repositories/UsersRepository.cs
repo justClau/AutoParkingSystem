@@ -16,15 +16,15 @@ namespace APSDataAccessLibrary.DAL.Repositories
 
         public IEnumerable<User> GetRegulars()
         {
-            var query = from user in ParkingContext.Users.Include("Vehicle")
+            var query = from user in ParkingContext.Users.Include(u => u.Vehicle)
                         where user.IsAdmin == false
                         orderby user.Username ascending
                         select user;
             return query;
         }
-        public override User Get(int UserID)
+        public override User Get(int userID)
         {
-            var user = ParkingContext.Users.Find(UserID);
+            var user = ParkingContext.Users.Find(userID);
             ParkingContext.Entry(user).Reference(u => u.Vehicle).Load();
             return user;
         }
@@ -36,34 +36,34 @@ namespace APSDataAccessLibrary.DAL.Repositories
         {
             return ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Username == name);
         }
-        public User SetAdminStatus(int UserID, bool AdminStatus)
+        public User SetAdminStatus(int userID, bool adminStatus)
         {
-            var user = ParkingContext.Users.Find(UserID);
+            var user = ParkingContext.Users.Find(userID);
             if (user == null)
                 return null;
-            user.IsAdmin = AdminStatus;
+            user.IsAdmin = adminStatus;
             return user;
         }
-        public User SetVehicle(int UserID, Vehicle NewVehicle)
+        public User SetVehicle(int userID, Vehicle newVehicle)
         {
-            var user = ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Id == UserID);
+            var user = ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Id == userID);
             if (user == null || user.Vehicle != null)
                 return null;
-            user.Vehicle = NewVehicle;
+            user.Vehicle = newVehicle;
             return user;
         }
-        public User RemoveVehicle(int UserID)
+        public User RemoveVehicle(int userID)
         {
-            var user = ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Id == UserID);
+            var user = ParkingContext.Users.Include(u => u.Vehicle).FirstOrDefault(u => u.Id == userID);
             if (user == null || user.Vehicle == null)
                 return null;
             user.Vehicle = null;
             return user;
         }
-        public User UpdateUsername(int UserID, string NewUsername)
+        public User UpdateUsername(int userID, string newUsername)
         {
-            var user = ParkingContext.Users.Find(UserID);
-            user.Username = NewUsername;
+            var user = ParkingContext.Users.Find(userID);
+            user.Username = newUsername;
             return user;
         }
     }

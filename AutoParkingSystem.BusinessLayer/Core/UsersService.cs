@@ -1,7 +1,9 @@
-﻿using APSDataAccessLibrary.DAL;
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using APSDataAccessLibrary.DAL;
 using APSDataAccessLibrary.Models;
+using AutoParkingSystem.BusinessLayer.Domain;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Core
 {
     public class UsersService : IUsersService
     {
@@ -15,25 +17,28 @@ namespace AutoParkingSystem.Services
         public UsersResult GetInfo(int UserID)
         {
             var user = unit.Users.Get(UserID);
-            var msg = $"Welcome Back, {user.FullName}";
+            string[] Message = new string[4]
+            {
+                $"Welcome Back, {user.FullName}","","",""
+            };
             if (user.Vehicle is not null)
             {
                 var parkingLot = unit.ParkingLots.GetByVehicle(user.Vehicle.Id);
                 var time = (DateTime.Now - user.Vehicle.StartingTime).TotalMinutes;
-                var msg2 = $"Your Vehicle with Registration Number {user.Vehicle.PlateNumber}";
-                var msg3 = $"Is parked at {parkingLot.Name} floor {parkingLot.FloorNumber}.";
-                var msg4 = $"You parked your vehicle {time} minutes ago";
+                Message[1] = $"Your Vehicle with Registration Number {user.Vehicle.PlateNumber}";
+                Message[2] = $"Is parked at {parkingLot.Name} floor {parkingLot.FloorNumber}.";
+                Message[3] = $"You parked your vehicle {time} minutes ago";
                 return new UsersResult
                 {
                     Success = true,
-                    Message = $"{msg}\n{msg2}\n{msg3}\n{msg4}"
+                    Message = $"{Message[0]}\n{Message[1]}\n{Message[2]}\n{Message[3]}"
                 };
             }
 
             return new UsersResult
             {
                 Success = true,
-                Message = $"{msg}\nYou don't have a parked car right now."
+                Message = $"{Message[0]}\nYou don't have a parked car right now."
             };
         }
         public UsersResult ChangeUsername(string Username, string NewUsername)
@@ -68,12 +73,5 @@ namespace AutoParkingSystem.Services
 
         }
 
-    }
-
-    public class UsersResult
-    {
-        public bool Success { get; set; }
-        public string? Message { get; set; }
-        public User User { get; set; }
     }
 }

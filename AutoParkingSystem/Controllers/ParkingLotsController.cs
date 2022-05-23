@@ -1,6 +1,5 @@
 ﻿using APSDataAccessLibrary.Models;
-using AutoParkingSystem.Services;
-using Microsoft.AspNetCore.Http;
+using AutoParkingSystem.BusinessLayer.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoParkingSystem.Controllers
@@ -32,7 +31,7 @@ namespace AutoParkingSystem.Controllers
             if (user.Success == false)
                 return BadRequest(user);
 
-            if (validation.isAdmin(Username).Success == true)
+            if (validation.IsAdmin(Username).Success == true)
                 return Ok(parking.ShowAllParkingLots());
 
             return Ok(parking.ShowFreeParkingLots());
@@ -51,7 +50,7 @@ namespace AutoParkingSystem.Controllers
             if (parkinglots.Success == false)
                 return BadRequest(parkinglots);
 
-            var vehicle = validation.CarDetails(Vehicle);
+            var vehicle = validation.VerifyCarDetails(Vehicle);
             if(vehicle.Success == false)
                 return BadRequest(vehicle);
 

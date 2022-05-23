@@ -14,10 +14,10 @@ namespace APSDataAccessLibrary.DAL.Repositories
         public VehicleRepository(ParkingContext context) : base(context) { }
 
 
-        public Vehicle GetVehicleByVIN(string VIN)
-            => ParkingContext.Vehicles.Where(veh => veh.VIN == VIN).FirstOrDefault();
+        public Vehicle GetVehicleByVIN(string vin)
+            => ParkingContext.Vehicles.Where(v => v.VIN == vin).FirstOrDefault();
 
         public Vehicle GetVehicleByPlate(string Plate)
-            => ParkingContext.Vehicles.Where(veh => veh.PlateNumber == Plate).FirstOrDefault();
+            => ParkingContext.Vehicles.Where(v => v.PlateNumber == Plate).FirstOrDefault();
     }
 }

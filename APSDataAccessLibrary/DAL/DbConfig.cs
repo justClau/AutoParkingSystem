@@ -47,7 +47,7 @@ namespace APSDataAccessLibrary.DAL
                         database.ParkingLots.Add(row);
                         database.SaveChanges();
                     }
-            if(!database.ParkingSchema.Any())
+            if(database.ParkingSchema.Any() == false)
                 database.ParkingSchema.Add(new ParkingSchema { Floors = f, SizeX = n, SizeY = m });
             else
             {
@@ -59,7 +59,8 @@ namespace APSDataAccessLibrary.DAL
                 entity.State = EntityState.Modified;
             }
             database.SaveChanges();
-            if (!database.Users.Any()) AddUsers();
+            if (database.Users.Any() == false) 
+                AddUsers();
             
         }
         internal ConfigDTO StartParkingLotConfiguration()
@@ -77,13 +78,22 @@ namespace APSDataAccessLibrary.DAL
             var init = database.ParkingSchema.FirstOrDefault();
             if (init is not null && init.Floors == floor && init.SizeX == n && init.SizeY == m)
                 return new ConfigDTO { StatusCode = 500, Success = false, Message = "No new changes to make" };
-            if(init is null) AddSchema(floor, n, m);
+
+            if(init is null) 
+                AddSchema(floor, n, m);
+
             if (database.ParkingLots.Any())
                 database.ParkingLots.FromSqlRaw("TRUNCATE TABLE dbo.ParkingLots").FirstOrDefault();
+
             ParkingDatabaseInit(floor, n, m);
             database.SaveChanges();
             var query = from p in database.ParkingLots orderby p.Id select p;
-            return new ConfigDTO { StatusCode = 203, Success = true, Message = "ParkingLots Initialised", parkingLots = query };
+            return new ConfigDTO {
+                StatusCode = 203, 
+                Success = true,
+                Message = "ParkingLots Initialised", 
+                parkingLots = query 
+            };
         }
     }
     public class ConfigDTO

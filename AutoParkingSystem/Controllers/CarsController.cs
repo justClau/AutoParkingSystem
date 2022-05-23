@@ -1,5 +1,4 @@
-﻿using AutoParkingSystem.Services;
-using Microsoft.AspNetCore.Http;
+﻿using AutoParkingSystem.BusinessLayer.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoParkingSystem.Controllers
@@ -25,7 +24,7 @@ namespace AutoParkingSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = validation.isAdmin(Username);
+            var user = validation.IsAdmin(Username);
             if (user.Success == false)
                 return BadRequest(user);
 
@@ -37,7 +36,7 @@ namespace AutoParkingSystem.Controllers
         [HttpGet("{CarString}")]
         public async Task<IActionResult> FindCar(string CarString)
         {
-            var user = validation.isAdmin(Username);
+            var user = validation.IsAdmin(Username);
             if (user.Success == false)
                 return BadRequest(user);
 

@@ -6,9 +6,9 @@ namespace APSDataAccessLibrary.DAL.Repositories
     {
         User GetByUsername(string name);
         IEnumerable<User> GetRegulars();
-        User RemoveVehicle(int UserID);
-        User SetAdminStatus(int UserID, bool AdminStatus);
-        User SetVehicle(int UserID, Vehicle NewVehicle);
-        User UpdateUsername(int UserID, string NewUsername);
+        User RemoveVehicle(int userID);
+        User SetAdminStatus(int userID, bool adminStatus);
+        User SetVehicle(int userID, Vehicle newVehicle);
+        User UpdateUsername(int userID, string newUsername);
     }
 }

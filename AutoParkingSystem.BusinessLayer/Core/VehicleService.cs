@@ -1,7 +1,8 @@
-﻿using APSDataAccessLibrary.DAL;
-using APSDataAccessLibrary.Models;
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using APSDataAccessLibrary.DAL;
+using AutoParkingSystem.BusinessLayer.Domain;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Core
 {
     public class VehicleService : IVehicleService
     {
@@ -43,18 +44,5 @@ namespace AutoParkingSystem.Services
                 };
             }
         }
-    }
-    public enum SearchType
-    {
-        PlateNumber,
-        VIN
-    }
-
-    public class VehicleResult
-    {
-        public bool Success { get; set; }
-        public string? Message { get; set; }
-        public Vehicle? Vehicle { get; set; }
-        public IEnumerable<Vehicle>? Vehicles { get; set; }
     }
 }

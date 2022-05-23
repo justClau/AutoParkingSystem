@@ -1,7 +1,9 @@
-﻿using APSDataAccessLibrary.DAL;
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using APSDataAccessLibrary.DAL;
 using APSDataAccessLibrary.Models;
+using AutoParkingSystem.BusinessLayer.Domain;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Core
 {
     public class ParkingService : IParkingService
     {
@@ -74,8 +76,7 @@ namespace AutoParkingSystem.Services
 
             Vehicle.StartingTime = DateTime.Now;
             user = unit.Users.SetVehicle(UserID, Vehicle);
-            unit.Commit();
-            unit.ParkingLots.SetVehicle(ParkingLotID, user.Vehicle);
+            unit.ParkingLots.SetVehicle(ParkingLotID, Vehicle);
             unit.Commit();
             return new ParkingResults
             {
@@ -121,14 +122,5 @@ namespace AutoParkingSystem.Services
                 ParkingLots = floor
             };
         }
-    }
-    public class ParkingResults
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-        public int Count { get; set; }
-        public IEnumerable<ParkingLot> ParkingLots { get; set; }
-        public Vehicle? VehicleInfo { get; set; }
-        public Bill? Bill { get; set; }
     }
 }

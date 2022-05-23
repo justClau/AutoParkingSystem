@@ -1,17 +1,20 @@
-﻿using APSDataAccessLibrary.DAL;
+﻿using AutoParkingSystem.BusinessLayer.DTO;
+using APSDataAccessLibrary.DAL;
 using APSDataAccessLibrary.Models;
+using AutoParkingSystem.BusinessLayer.Domain;
+using Microsoft.Extensions.Configuration;
 
-namespace AutoParkingSystem.Services
+namespace AutoParkingSystem.BusinessLayer.Core
 {
     public class BillingService : IBillingService
     {
         private readonly IUnitOfWork unit;
         private readonly float price;
 
-        public BillingService(IUnitOfWork unit)
+        public BillingService(IUnitOfWork unit, IConfiguration config)
         {
             this.unit = unit;
-            this.price = 0.09f;
+            this.price = float.Parse(config.GetSection("ParkingSystem").GetSection("ParkingPrice").Value);
         }
 
         public BillingResult CreateBill(int UserID, Vehicle Vehicle, string ParkingLotName)
@@ -54,21 +57,14 @@ namespace AutoParkingSystem.Services
                 Bills = unit.Bills.GetBills(PageIndex, PageSize)
             };
         }
-        public BillingResult ForUser(int UserID)
+        public BillingResult GetUserBills(int UserID)
         {
             return new BillingResult
             {
                 Success = true,
-                Bills = unit.Bills.GetUserBills(UserID)
+                Bills = unit.Bills.GetBillsByUserId(UserID)
             };
         }
 
-    }
-    public class BillingResult
-    {
-        public bool Success { get; set; }
-        public string? Message { get; set; }
-        public Bill? Bill { get; set; }
-        public IEnumerable<Bill>? Bills { get; set; }
     }
 }
