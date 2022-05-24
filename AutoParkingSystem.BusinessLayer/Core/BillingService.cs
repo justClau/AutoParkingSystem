@@ -41,6 +41,8 @@ namespace AutoParkingSystem.BusinessLayer.Core
         public BillingResult Audit()
         {
             var bills = unit.Bills.GetAll();
+            if(bills.Any() == false)
+                return new BillingResult { Success = false, Message = "No bills found!" };
             return new BillingResult
             {
                 Success = true,
@@ -59,10 +61,17 @@ namespace AutoParkingSystem.BusinessLayer.Core
         }
         public BillingResult GetUserBills(int UserID)
         {
+            var bills = unit.Bills.GetBillsByUserId(UserID);
+            if (bills.Any() == false)
+                return new BillingResult
+                {
+                    Success = false,
+                    Message = "The specified user doesn't have any registered bills"
+                };
             return new BillingResult
             {
                 Success = true,
-                Bills = unit.Bills.GetBillsByUserId(UserID)
+                Bills = bills
             };
         }
 
