@@ -2,6 +2,7 @@
 using APSDataAccessLibrary.DAL.Repositories;
 using APSDataAccessLibrary.Models;
 using AutoParkingSystem.BusinessLayer.Domain;
+using System.Text.RegularExpressions;
 
 namespace AutoParkingSystem.BusinessLayer.Core
 {
@@ -120,6 +121,12 @@ namespace AutoParkingSystem.BusinessLayer.Core
                     Success = false,
                     Message = "The search criteria is not a valid License Plate Number or VIN"
                 };
+            if (SearchTerm.Length >= 6 && SearchTerm.Length <= 8 && PlateNumberStringValidation(SearchTerm) == false)
+                return new ValidationResult 
+                { 
+                    Success = false,
+                    Message = "Invalid License Plate! License Plate Format: SV00AAA or B100AAA Or Similar" 
+                };
             return new ValidationResult
             {
                 Success = true,
@@ -174,6 +181,22 @@ namespace AutoParkingSystem.BusinessLayer.Core
                 Success = true,
                 Message = "The Chosen Parking Lot is Free!"
             };
+        }
+
+        private bool PlateNumberStringValidation(string plateNumber)
+        {
+            bool ok = false;
+            var regexOne = new Regex(@"[A-Z]{2}\d{2}[A-Z]{3}"); //SV01BRN
+            var regexTwo = new Regex(@"[A-Z]\d{3}[A-Z]{3}"); //B135XLM
+            var regexThree = new Regex(@"[A-Z]{2}\d{3}[A-Z]{3}"); //SV100BRN
+            var regexFour = new Regex(@"[A-Z]\d{2}[A-Z]{3}"); //B88MCN
+            if(plateNumber.Length == 7)
+                ok = regexOne.IsMatch(plateNumber) || regexTwo.IsMatch(plateNumber);
+            if (plateNumber.Length == 6)
+                ok = regexFour.IsMatch(plateNumber);
+            if(plateNumber.Length == 8)
+                ok = regexThree.IsMatch(plateNumber);
+            return ok;
         }
 
     }
