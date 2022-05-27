@@ -10,15 +10,17 @@ namespace APSDataAccessLibrary.Models
     public class User
     {
         public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
+
         public string Username { get; set; }
+
+        public int? VehicleId { get; set; }
+
         public Vehicle? Vehicle { get; set; }
-        [Required]
-        [MaxLength(50)]
+
         public string FullName { get; set; }
-        [Required]
+
         public bool IsAdmin { get; set; }
 
+        public ICollection<Bill> Bills { get; set; }
     }
 }

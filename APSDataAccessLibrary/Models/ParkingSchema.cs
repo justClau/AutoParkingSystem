@@ -10,11 +10,11 @@ namespace APSDataAccessLibrary.Models
     public class ParkingSchema
     {
         public int Id { get; set; }
-        [Required]
+
         public int Floors { get; set; }
-        [Required]
+
         public int SizeX { get; set; }
-        [Required]
+
         public int SizeY { get; set; } 
     }
 }

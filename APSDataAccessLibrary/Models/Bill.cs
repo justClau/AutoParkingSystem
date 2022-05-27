@@ -10,23 +10,23 @@ namespace APSDataAccessLibrary.Models
     public class Bill
     {
         public int Id { get; set; }
+
+        public int UserId { get; set; }
+        
         public User User { get; set; }
-        [Required]
-        [MaxLength(10)]
+        
         public string ParkingLot { get; set; }
-        [Required]
-        [MaxLength(8)]
+        
         public string VehiclePlate { get; set; }
-        [Required]
-        [MaxLength(17)]
+        
         public string VehicleVIN { get; set; }
-        [Required]
+        
         public DateTime IssuedAt { get; set; }
-        [Required]
+        
         public DateTime StartingTime { get; set; }
-        [Required]
+        
         public double BillValue { get; set; }
-        [Required]
+        
         public bool IsPaid { get; set; }
 
     }

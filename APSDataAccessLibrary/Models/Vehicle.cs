@@ -10,14 +10,15 @@ namespace APSDataAccessLibrary.Models
     public class Vehicle
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Please enter VIN")]
-        [MaxLength(17)]
+
+        public User Owner { get; set; }
+
         public string VIN { get; set; }
-        [Required(ErrorMessage = "Please enter VIN")]
-        [MaxLength(8)]
+
         public string PlateNumber { get; set; }
-        [Required]
+
         public DateTime StartingTime { get; set; }
 
+        public ParkingLot ParkingLot { get; set; }
     }
 }

@@ -1,0 +1,738 @@
+Admin Controller
+strategy: username must be in headers and username must be registered and admin
+
+/api/admin
+	get: check if user is admin
+	options: begin database initialization
+/api/admin/users
+	get: get all registered users
+	post: create new user
+	patch: Change a user admin rights
+
+Car Controller
+strategy: username must be in headers and username must be registered and admin
+
+/api/cars
+	get: get all cars
+/api/cars/{CarString = VIN/PlateNumber}
+	get: get car by reg number and lot occupied
+
+Parking Lot Controller
+strategy: username must be in headers if user wants to park (can still see free parking lots)
+
+/api/parkinglots/
+	get: get free parking lots || if admin, see all parking lots!
+	post: Park Vehicle in the nearest parking lot; Vehicle Details will be in the body;
+	delete: Unpark vehicle and generate bill;
+/api/parkinglots/{Floor}/{ParkingLotName}
+	get: See if parking lot is free
+	post: Park Vehicle in the specified parking lot (if free)
+
+Users Controller
+strategy: username must be in headers
+
+/api/users
+	get: check if user is registered or not & if user is registered get vehicle park time
+	patch: change username; new username must be in body; new username must be different from old username
+	?delete: send delete request to admin
+/api/users/new
+	get: Register information
+	post: Create new regular user: (if user is signed in(name in headers) will send an error)
+	
+[A-Z]{2}\d{2}[A-Z]{3}
+SV01BRN - 7
+
+[A-Z]{2}\d{3}[A-Z]{3}
+SV100XLM - 8
+
+[A-Z]\d{2}[A-Z]{3}
+B99LVM - 6
+
+[A-Z]\d{3}[A-Z]{3}
+B100ABC - 7
+
+
+
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "ParkingSystem",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "localhost:3000"
+    }
+  ],
+  "paths": {
+    "/api/Admin":{
+        "get": {
+            "summary": "Check if current user has admin rights",
+            "tags": ["isadmin"],
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "options":{
+            "summary": "Start Database automatic configuration",
+            "parameters": [
+                {
+                    "name":"password",
+                    "in":"header",
+                    "description":"DBConfig PWD",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description":"Success",
+                    "content": {
+                        "appication/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/Admin/users":{
+        "get":{
+            "summary": "Shows all registered users",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post":{
+            "summary": "Create a new user",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "patch":{
+            "summary": "Updates a user's Admin Rights",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/Cars/":{
+        "get":{
+            "summary": "Show All Parked Vehicles",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/Cars/{CarSearchString}":{
+        "get":{
+            "summary": "Show Information about a specific Vehicle",
+            "parameters": [
+            {
+                "name": "CarSearchString",
+                "in": "path",
+                "description": "Vehicle's VIN or Registration Number",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },{
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/ParkingLots":{
+        "get":{
+            "summary": "Show Free Parking Lots",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post":{
+            "summary": "Park a vehicle",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete":{
+            "summary": "Unpark vehicle and and pay the bill",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/ParkingLots/{Floor}":{
+        "get":{
+            "summary": "Show All Free Parking Lots on the specified floor",
+            "parameters": [{
+                "name": "Floor",
+                "in": "path",
+                "description": "The floor for search criteria",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },{
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/ParkingLots/{Floor}/{ParkingLotName}":{
+        "get":{
+            "summary": "Show Information about a parking lot",
+            "parameters": [{
+                "name": "Floor",
+                "in": "path",
+                "description": "The floor for search criteria",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },{
+                "name": "ParkingLotName",
+                "in": "path",
+                "description": "The lot's name for search criteria",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },{
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post":{
+            "summary": "Park a vehicle in a desired parking spot",
+            "parameters": [{
+                "name": "Floor",
+                "in": "path",
+                "description": "The floor for search criteria",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },{
+                "name": "ParkingLotName",
+                "in": "path",
+                "description": "The lot's name for search criteria",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },{
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/Users":{
+        "get":{
+            "summary": "Show current user info",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "patch":{
+            "summary": "Change the current user's username",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":true,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/Users/new":{
+        "get":{
+            "summary": "Get Registration form information",
+            "parameters": [
+                {
+                    "name":"username",
+                    "in":"header",
+                    "description":"Your username",
+                    "required":false,
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post":{
+            "summary": "Register as a new user",
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "username",
+          "fullName"
+        ],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      },
+      "Vehicle": {
+        "type": "object",
+        "required": [
+          "username",
+          "fullName"
+        ],
+        "properties": {
+          "vin": {
+            "type": "string"
+          },
+          "plateNumber": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ]
+}

@@ -10,11 +10,13 @@ namespace APSDataAccessLibrary.Models
     public class ParkingLot
     {
         public int Id { get; set; }
-        [Required]
+
         public int FloorNumber { get; set; }
-        [Required]
-        [MaxLength(10)]
+
         public string Name { get; set; }
+
+        public int? VehicleId { get; set; }
+
         public Vehicle? Vehicle { get; set; }
     }
 }

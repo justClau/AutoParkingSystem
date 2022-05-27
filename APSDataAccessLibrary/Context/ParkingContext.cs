@@ -29,5 +29,44 @@ namespace APSDataAccessLibrary.Context
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne<Vehicle>(u => u.Vehicle)
+                .WithOne(v => v.Owner)
+                .HasForeignKey<User>(u => u.VehicleId);
+            modelBuilder.Entity<User>(user =>
+            {
+                user.Property(u => u.Username).HasMaxLength(50);
+                user.Property(u => u.FullName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<ParkingLot>()
+                .HasOne<Vehicle>(p => p.Vehicle)
+                .WithOne(v => v.ParkingLot)
+                .HasForeignKey<ParkingLot>(p => p.VehicleId);
+            modelBuilder.Entity<ParkingLot>(parkingLot =>
+            {
+                parkingLot.Property(p => p.Name).HasMaxLength(10);
+            });
+
+            modelBuilder.Entity<Vehicle>(vehicle =>
+            {
+                vehicle.Property(v => v.VIN).HasMaxLength(17);
+                vehicle.Property(v => v.PlateNumber).HasMaxLength(8);
+            });
+
+            modelBuilder.Entity<Bill>()
+                .HasOne<User>(b => b.User)
+                .WithMany(u => u.Bills)
+                .HasForeignKey(b=> b.UserId);
+            modelBuilder.Entity<Bill>(bill => 
+            {
+                bill.Property(b => b.ParkingLot).HasMaxLength(10);
+                bill.Property(b => b.VehiclePlate).HasMaxLength(8);
+                bill.Property(b => b.VehicleVIN).HasMaxLength(17);
+            });
+        }
     }
 }

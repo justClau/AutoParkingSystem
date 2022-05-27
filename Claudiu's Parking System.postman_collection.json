@@ -1,0 +1,1316 @@
+{
+	"info": {
+		"_postman_id": "1356619e-e5ef-4111-a6f5-766bc023287a",
+		"name": "Claudiu's Parking System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "users",
+							"item": [
+								{
+									"name": "/api/Admin/users",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"users"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"users"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "/api/Admin/users",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"fullName\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"users"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"fullName\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"users"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "/api/Admin/users",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "\"<string>\"",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin",
+												"users"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "\"<string>\"",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Admin/users",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Admin",
+														"users"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/Admin",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "username",
+										"value": "root"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Admin"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/Admin",
+							"request": {
+								"method": "OPTIONS",
+								"header": [
+									{
+										"key": "password",
+										"value": "<string>"
+									},
+									{
+										"key": "username",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Admin"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "OPTIONS",
+										"header": [
+											{
+												"key": "password",
+												"value": "<string>"
+											},
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Admin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Admin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Cars",
+					"item": [
+						{
+							"name": "/api/Cars",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Cars",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Cars"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Cars",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Cars"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/Cars/:CarString",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Cars/:CarString",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Cars",
+										":CarString"
+									],
+									"variable": [
+										{
+											"key": "CarString",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Cars/:CarString",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Cars",
+												":CarString"
+											],
+											"variable": [
+												{
+													"key": "CarString",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Parking Lots",
+					"item": [
+						{
+							"name": "{Floor}",
+							"item": [
+								{
+									"name": "{Parking Lot Name}",
+									"item": [
+										{
+											"name": "/api/ParkingLots/:Floor/:ParkingLotName",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/ParkingLots/:Floor/:ParkingLotName",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"ParkingLots",
+														":Floor",
+														":ParkingLotName"
+													],
+													"variable": [
+														{
+															"key": "Floor",
+															"value": "<integer>",
+															"description": "(Required) "
+														},
+														{
+															"key": "ParkingLotName",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "username",
+																"value": "<string>"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/ParkingLots/:Floor/:ParkingLotName",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ParkingLots",
+																":Floor",
+																":ParkingLotName"
+															],
+															"variable": [
+																{
+																	"key": "Floor",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																},
+																{
+																	"key": "ParkingLotName",
+																	"value": "<string>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										},
+										{
+											"name": "/api/ParkingLots/:Floor/:ParkingLotName",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"plateNumber\": \"<string>\",\n  \"vin\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/ParkingLots/:Floor/:ParkingLotName",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"ParkingLots",
+														":Floor",
+														":ParkingLotName"
+													],
+													"variable": [
+														{
+															"key": "Floor",
+															"value": "<integer>",
+															"description": "(Required) "
+														},
+														{
+															"key": "ParkingLotName",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "username",
+																"value": "<string>"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"plateNumber\": \"<string>\",\n  \"vin\": \"<string>\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/ParkingLots/:Floor/:ParkingLotName",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ParkingLots",
+																":Floor",
+																":ParkingLotName"
+															],
+															"variable": [
+																{
+																	"key": "Floor",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																},
+																{
+																	"key": "ParkingLotName",
+																	"value": "<string>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "text/plain"
+														}
+													],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "/api/ParkingLots/:Floor",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/ParkingLots/:Floor",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ParkingLots",
+												":Floor"
+											],
+											"variable": [
+												{
+													"key": "Floor",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/ParkingLots/:Floor",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"ParkingLots",
+														":Floor"
+													],
+													"variable": [
+														{
+															"key": "Floor",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/ParkingLots",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/ParkingLots",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ParkingLots"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/ParkingLots",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ParkingLots"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/ParkingLots",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"plateNumber\": \"<string>\",\n  \"vin\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/ParkingLots",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ParkingLots"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"plateNumber\": \"<string>\",\n  \"vin\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/ParkingLots",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ParkingLots"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/ParkingLots",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/ParkingLots",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"ParkingLots"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/ParkingLots",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ParkingLots"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "new",
+							"item": [
+								{
+									"name": "/api/Users/new",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Users/new",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users",
+												"new"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/new",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														"new"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "/api/Users/new",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"fullName\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users/new",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users",
+												"new"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "username",
+														"value": "<string>"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"fullName\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/Users/new",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Users",
+														"new"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/Users",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "username",
+										"value": "<string>"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"<string>\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "username",
+												"value": "<string>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "\"<string>\"",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Bills",
+					"item": [
+						{
+							"name": "/api/Bills",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Bills",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Bills"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Bills/:username",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Bills/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Bills",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://localhost:7030",
+			"type": "string"
+		}
+	]
+}
